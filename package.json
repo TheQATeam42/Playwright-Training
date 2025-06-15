@@ -1,0 +1,36 @@
+{
+  "name": "cucumber-playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "transpile": "npm run lintandfix && rimraf dist && babel --extensions .ts --out-dir dist src",
+    "cucumber": "npm run transpile && cucumber-js",
+    "precucumber": "rimraf reports && mkdir reports && echo {} > reports/report.json",
+    "postcucumber": "ts-node ./src/reporter/cucumber-report.ts",
+    "lint": "eslint ./src --ext .ts",
+    "lintandfix": "eslint ./src --ext .ts --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.23.9",
+    "@babel/preset-env": "^7.24.0",
+    "@babel/preset-typescript": "^7.23.3",
+    "@cucumber/cucumber": "^10.0.1",
+    "@playwright/test": "^1.39.0",
+    "cucumber-html-reporter": "^7.1.1",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "playwright": "^1.39.0",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
+  }
+}

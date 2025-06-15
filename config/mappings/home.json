@@ -1,0 +1,5 @@
+{
+  "comment 0":                 "general elements",
+  "home title":                "[data-id='contacts']",
+  "create new contact button": "[data-id='add-button']"
+}
