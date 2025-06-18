@@ -1,0 +1,5 @@
+export * from './enterSearchText'
+export * from './isContactDisplayed'
+export * from './isOnlyOneContactDisplayed'
+export * from './deleteContact'
+export * from './clearSearchInput'
