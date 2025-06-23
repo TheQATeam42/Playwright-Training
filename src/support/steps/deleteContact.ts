@@ -1,5 +1,7 @@
 import type { WebDriver } from 'selenium-webdriver'
 import { By } from 'selenium-webdriver'
+import { popAlertTreatment } from './popAlertTreatment'
+
 
 /**
  * Clicks the delete button for the contact with the given name
@@ -12,7 +14,7 @@ export const deleteContact = async (
     driver: WebDriver,
     listItemSelector: string,
     deleteButtonSelector: string,
-    contactName: string
+    contactName: string,
 ): Promise<void> => {
     const items = await driver.findElements(By.css(listItemSelector))
 
@@ -21,9 +23,12 @@ export const deleteContact = async (
         if (text.includes(contactName)) {
             const deleteBtn = await item.findElement(By.css(deleteButtonSelector))
             await deleteBtn.click()
+            await popAlertTreatment(driver, true);
+
             return
         }
     }
 
     throw new Error(`Delete button for contact "${contactName}" not found.`)
 }
+

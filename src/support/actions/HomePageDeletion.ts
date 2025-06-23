@@ -1,12 +1,11 @@
-import { WebDriver } from 'selenium-webdriver'
-import { GlobalConfig } from '../../env/types'
-import { globalConfig } from '../../env/globalConfig'
+import type { WebDriver } from 'selenium-webdriver'
+import type { GlobalConfig } from '../../env/types'
 import {
-    enterSearchText,
-    isContactDisplayed,
-    isOnlyOneContactDisplayed,
-    deleteContact,
-    clearSearchInput,
+  enterSearchText,
+  isContactDisplayed,
+  isOnlyOneContactDisplayed,
+  deleteContact,
+  clearSearchInput,
 } from '../steps'
 
 /**
@@ -22,18 +21,48 @@ import {
  */
 export const performContactDeletionFlow = async (
     driver: WebDriver,
-    config: GlobalConfig = globalConfig
+    config: GlobalConfig
 ): Promise<void> => {
-    const pageId = 'homePage'
+    const pageId: string = 'homePage'
     const mappings = config.pageElementMappings[pageId]
-    const contactName = 'Alea Nieves'
+    const contactName: string = 'Alea Nieves'
 
     await driver.get(config.pagesConfig[pageId])
 
-    await enterSearchText(driver, mappings.searchInput, contactName)
-    await isContactDisplayed(driver, contactName, mappings.contactNameDisplay)
-    await isOnlyOneContactDisplayed(driver, mappings.contactListItem)
-    await deleteContact(driver, mappings.contactListItem, mappings.deleteButton, contactName)
-    await clearSearchInput(driver, mappings.searchInput)
-    await isContactDisplayed(driver, contactName, mappings.contactNameDisplay, false)
+    await enterSearchText(
+        driver,
+        mappings.searchInput,
+        contactName
+    )
+
+    await isContactDisplayed(
+        driver,
+        contactName,
+        mappings.contactNameDisplayId,
+        true
+    )
+
+    await isOnlyOneContactDisplayed(
+        driver,
+        mappings.contactListItem
+    )
+
+    await deleteContact(
+        driver,
+        mappings.contactListItem,
+        mappings.deleteButton,
+        contactName,
+    )
+    
+    await clearSearchInput(
+        driver,
+        mappings.searchInput
+    )
+
+    await isContactDisplayed(
+        driver,
+        contactName,
+        mappings.contactNameDisplayId,
+        false
+    )
 }

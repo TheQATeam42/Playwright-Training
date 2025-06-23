@@ -10,6 +10,6 @@ export const clearSearchInput = async (
     driver: WebDriver,
     searchInputSelector: string
 ): Promise<void> => {
-    const input = await driver.wait(until.elementLocated(By.css(searchInputSelector)), 5000)
+    const input = await driver.wait(until.elementLocated(By.css(searchInputSelector)))
     await input.clear()
 }

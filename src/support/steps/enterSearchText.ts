@@ -12,6 +12,6 @@ export const enterSearchText = async (
     searchInputSelector: string,
     searchText: string
 ): Promise<void> => {
-    const input = await driver.wait(until.elementLocated(By.css(searchInputSelector)), 5000)
+    const input = await driver.wait(until.elementLocated(By.css(searchInputSelector)))
     await input.sendKeys(searchText)
 }

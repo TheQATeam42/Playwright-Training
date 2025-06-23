@@ -1,21 +1,15 @@
+import { test } from '@playwright/test'
 import { Builder, WebDriver } from 'selenium-webdriver'
-import { describe, it, before, after } from 'node:test' // or use 'mocha' if preferred
 import { performContactDeletionFlow } from '../support/actions/HomePageDeletion'
+import { globalConfig } from '../env/globalConfig'
 
-let driver: WebDriver
 
-describe('Contact deletion flow using Selenium WebDriver', () => {
-    before(async () => {
-        driver = await new Builder().forBrowser('chrome').build()
-    })
+test('Contact deletion flow in home page', async () => {
+  const driver: WebDriver = await new Builder().forBrowser('chrome').build()
 
-    after(async () => {
-        if (driver) {
-            await driver.quit()
-        }
-    })
-
-    it('should delete the contact "Alea Nieves" from the list', async () => {
-        await performContactDeletionFlow(driver)
-    })
+  try {
+    await performContactDeletionFlow(driver, globalConfig)
+  } finally {
+    await driver.quit()
+  }
 })

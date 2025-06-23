@@ -4,6 +4,7 @@
  * @returns
  */
 export const getJsonFromFile = <T = Record<string, string>>(path: string): T => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     return require(`${process.cwd()}${path}`)
 }
 

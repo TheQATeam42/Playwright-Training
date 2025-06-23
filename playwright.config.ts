@@ -29,5 +29,9 @@ export default defineConfig({
         trace: "retain-on-failure" // will show all errors of the steps as a video
       },
     },
+    {
+      name: 'webkit',
+      use: { browserName: 'webkit' },
+    },
   ],
 })
