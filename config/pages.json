@@ -1,4 +1,5 @@
 {
   "home": "/",
-  "create": "/tasks/create"
+  "create": "/tasks/create",
+  "playground": "/playground"
 }

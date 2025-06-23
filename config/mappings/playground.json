@@ -1,0 +1,4 @@
+{
+    "autcomplete combobox": "[id='movies-input']",
+    "autcomplete combobox options": "[id='movies-input-listbox']"
+}
