@@ -1,0 +1,8 @@
+{
+    "creation form": "[data-id='contact-form']",
+    "name field": "[data-id='name']",
+    "gender field": "[data-id='gender']",
+    "phone field": "[data-id='phone']",
+    "street field": "[data-id='street']",
+    "city field": "[data-id='city']"
+}
