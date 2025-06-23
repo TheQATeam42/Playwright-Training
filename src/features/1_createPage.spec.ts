@@ -56,3 +56,11 @@ test("Create new contact, missing city", async ({ page }): Promise<void> => {
     await page.getByRole("button", { name: "Create" }).click();
     await checkMissingField(page, "city")
 })
+
+test("Fill new contact, but cancel", async ({ page }): Promise<void> => {
+    await page.getByRole("button", { name: "Create" }).click();
+
+    await fillContactInfo(page, contact)
+    await page.getByRole("button", { name: "Cancel" }).click();
+    expect(await getContactNames(page)).not.toContain("Genghis Khan")
+})
