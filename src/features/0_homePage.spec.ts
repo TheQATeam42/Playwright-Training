@@ -1,6 +1,6 @@
-import { expect } from "playwright/test"
-import { test } from "../setup/hooks"
-import { countContacts, fillSearchBar, getContactNames } from "../steps/contact-steps"
+import {expect} from "playwright/test"
+import {test} from "../setup/hooks"
+import {countContacts, fillSearchBar, getContactNames} from "../steps/contact-steps"
 
 
 /*
@@ -12,7 +12,7 @@ import { countContacts, fillSearchBar, getContactNames } from "../steps/contact-
     So, when writing a scenario here, write the small steps in a scenario function
     and write the scenario function in here
 */
-test("Check and delete existing contact", async ({ page }): Promise<void> => {
+test("Check and delete existing contact", async ({page}): Promise<void> => {
     const contactName: string = "Alea Nieves"
     await fillSearchBar(page, contactName)
     expect(await countContacts(page)).toEqual(1)
@@ -23,7 +23,7 @@ test("Check and delete existing contact", async ({ page }): Promise<void> => {
         await page.accept()
     })
 
-    await page.getByRole("button", { name: "Delete" }).click()
+    await page.getByRole("button", {name: "Delete"}).click()
     await fillSearchBar(page, "")
     expect(await getContactNames(page)).not.toContain(contactName)
 })

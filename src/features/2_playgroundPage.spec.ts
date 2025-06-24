@@ -1,10 +1,10 @@
-import { expect, Locator, Page } from "playwright/test"
-import { test } from "../setup/hooks"
-import { navigateToPage } from "../support/navigation-behavior";
-import { globalConfig } from "..";
-import { getElement } from "../support/elements-helper";
-import { getAutocompleteComboBoxOptions, selectAutocompleteComboBoxOption } from "../steps/combobox-steps";
-import { checkSwitchDisabledByClick } from "../steps/switch-steps";
+import {expect, Locator} from "playwright/test"
+import {test} from "../setup/hooks"
+import {navigateToPage} from "../support/navigation-behavior"
+import {globalConfig} from ".."
+import {getElement} from "../support/elements-helper"
+import {getAutocompleteComboBoxOptions, selectAutocompleteComboBoxOption} from "../steps/combobox-steps"
+import {checkSwitchDisabledByClick} from "../steps/switch-steps"
 
 /*
     Here you write all the scenarios of the playgroundPage.
@@ -15,23 +15,23 @@ import { checkSwitchDisabledByClick } from "../steps/switch-steps";
     So, when writing a scenario here, write the small steps in a scenario function
     and write the scenario function in here
 */
-test("Autocomplete Combo Box", async ({ page }): Promise<void> => {
+test("Autocomplete Combo Box", async ({page}): Promise<void> => {
     await navigateToPage(page, "playground", globalConfig)
 
     const comboBox: Locator = await getElement(page, "autcomplete combobox", globalConfig)
     await comboBox.fill("pu")
-    await selectAutocompleteComboBoxOption(page, 0);
+    await selectAutocompleteComboBoxOption(page, 0)
     expect(await comboBox.inputValue()).toBe("Pulp Fiction")
 
     await comboBox.fill("")
-    await comboBox.click()  // click on input so options are rendered
+    await comboBox.click()  // Click on input so options are rendered
     const options: string[] = await getAutocompleteComboBoxOptions(page)
     const itemIndex: number = Math.floor(Math.random() * options.length)
     await selectAutocompleteComboBoxOption(page, itemIndex)
     expect(await comboBox.inputValue()).toBe(options[itemIndex])
 })
 
-test("Checkboxes", async ({ page }): Promise<void> => {
+test("Checkboxes", async ({page}): Promise<void> => {
     await navigateToPage(page, "playground", globalConfig)
 
     const checkboxes: Locator[] = await (await getElement(page, "checkbox", globalConfig)).all()
@@ -45,7 +45,7 @@ test("Checkboxes", async ({ page }): Promise<void> => {
     }
 })
 
-test("Switches", async ({ page }): Promise<void> => {
+test("Switches", async ({page}): Promise<void> => {
     await navigateToPage(page, "playground", globalConfig)
 
     const switch1: Locator = await getElement(page, "switch one", globalConfig)

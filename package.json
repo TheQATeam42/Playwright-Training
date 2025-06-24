@@ -5,7 +5,9 @@
   "scripts": {
     "transpile": "rimraf dist && babel --extensions .ts --out-dir dist src",
     "start": "npm run transpile && node ./dist/index.js",
-    "start-playwright": "npm run start && npx playwright test"
+    "start-playwright": "npm run start && npx playwright test",
+    "lint": "eslint ./src --ext .ts",
+    "lintandfix": "eslint ./src --ext .ts --fix"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +22,9 @@
     "rimraf": "^6.0.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.53.1"
+    "@playwright/test": "^1.53.1",
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
+    "eslint": "^8.1.0",
+    "eslint-plugin-unused-imports": "^4.1.4"
   }
 }

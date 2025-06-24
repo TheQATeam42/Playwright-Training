@@ -1,7 +1,7 @@
-import { expect, Page } from "playwright/test"
-import { test } from "../setup/hooks"
-import { Contact, fillContactInfo, getErrorMessage, omitFieldFromContact } from "../steps/ceration-form-steps";
-import { getContactNames } from "../steps/contact-steps";
+import {expect, Page} from "playwright/test"
+import {test} from "../setup/hooks"
+import {Contact, fillContactInfo, getErrorMessage, omitFieldFromContact} from "../steps/ceration-form-steps"
+import {getContactNames} from "../steps/contact-steps"
 
 const contact: Contact = {
     name: "Genghis Khan",
@@ -14,7 +14,7 @@ const contact: Contact = {
 const checkMissingField = async (page: Page, fieldToOmit: keyof Contact): Promise<void> => {
     await fillContactInfo(page, omitFieldFromContact(contact, fieldToOmit))
 
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", {name: "Save"}).click()
 
     const errorMessage: string = await getErrorMessage(page)
     expect(errorMessage).toBe(`Error: The "${fieldToOmit}" field can't be empty.`)
@@ -29,38 +29,38 @@ const checkMissingField = async (page: Page, fieldToOmit: keyof Contact): Promis
     So, when writing a scenario here, write the small steps in a scenario function
     and write the scenario function in here
 */
-test("Create new contact", async ({ page }): Promise<void> => {
-    await page.getByRole("button", { name: "Create" }).click();
+test("Create new contact", async ({page}): Promise<void> => {
+    await page.getByRole("button", {name: "Create"}).click()
 
     await fillContactInfo(page, contact)
-    await page.getByRole("button", { name: "Save" }).click();
+    await page.getByRole("button", {name: "Save"}).click()
     expect(await getContactNames(page)).toContain("Genghis Khan")
 })
 
-test("Create new contact, missing name", async ({ page }): Promise<void> => {
-    await page.getByRole("button", { name: "Create" }).click();
+test("Create new contact, missing name", async ({page}): Promise<void> => {
+    await page.getByRole("button", {name: "Create"}).click()
     await checkMissingField(page, "name")
 })
 
-test("Create new contact, missing phone", async ({ page }): Promise<void> => {
-    await page.getByRole("button", { name: "Create" }).click();
+test("Create new contact, missing phone", async ({page}): Promise<void> => {
+    await page.getByRole("button", {name: "Create"}).click()
     await checkMissingField(page, "phone")
 })
 
-test("Create new contact, missing street", async ({ page }): Promise<void> => {
-    await page.getByRole("button", { name: "Create" }).click();
+test("Create new contact, missing street", async ({page}): Promise<void> => {
+    await page.getByRole("button", {name: "Create"}).click()
     await checkMissingField(page, "street")
 })
 
-test("Create new contact, missing city", async ({ page }): Promise<void> => {
-    await page.getByRole("button", { name: "Create" }).click();
+test("Create new contact, missing city", async ({page}): Promise<void> => {
+    await page.getByRole("button", {name: "Create"}).click()
     await checkMissingField(page, "city")
 })
 
-test("Fill new contact, but cancel", async ({ page }): Promise<void> => {
-    await page.getByRole("button", { name: "Create" }).click();
+test("Fill new contact, but cancel", async ({page}): Promise<void> => {
+    await page.getByRole("button", {name: "Create"}).click()
 
     await fillContactInfo(page, contact)
-    await page.getByRole("button", { name: "Cancel" }).click();
+    await page.getByRole("button", {name: "Cancel"}).click()
     expect(await getContactNames(page)).not.toContain("Genghis Khan")
 })

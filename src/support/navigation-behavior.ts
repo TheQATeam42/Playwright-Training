@@ -23,11 +23,11 @@ export const navigateToPage = async (page: Page, pageId: string, globalConfig: G
 export const getCurrentPageId = async (page: Page, globalConfig: GlobalConfig): Promise<PageId> => {
     const {pagesConfig} = globalConfig
     const currentURL: string = page.url()
-    // returns the keys from the pages.json file, which are the pageId's
+    // Returns the keys from the pages.json file, which are the pageId's
     const pageConfigPageId = Object.keys(pagesConfig)
-    // get the current page URL route
+    // Get the current page URL route
     const {pathname: currentPath} = new URL(currentURL)
-    // searches for the pageId based on the regex of the url
+    // Searches for the pageId based on the regex of the url
     let currentPageId = ""
     for (const pageId of pageConfigPageId) {
         if (currentPath === pagesConfig[pageId]) {
@@ -39,5 +39,6 @@ export const getCurrentPageId = async (page: Page, globalConfig: GlobalConfig): 
         throw Error(`Failed to get page name from current route ${currentPath} \
         possible pages: ${JSON.stringify(pagesConfig)}`)
     }
+
     return currentPageId
 }
