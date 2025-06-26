@@ -1,0 +1,8 @@
+{
+  "movies input": "#movies-input",
+  "movies input options": "#movies-input-listbox",
+  "checkbox": "input[type='checkbox'][data-id$='-radio-button']",
+  "switch one": "[data-id='switch-one']",
+  "switch two": "[data-id='switch-two']",
+  "dessert table": "[data-id='basic-table']"
+}

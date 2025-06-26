@@ -1,3 +1,11 @@
 {
-  "contacts title": "[data-id='contacts']"
+  "contacts title": "[data-id='contacts']",
+  "search input": "[data-id='search']",
+  "contact info": "[data-id='contact']",
+  "full name": "[data-id='name']",
+  "gender": "[data-id='gender']",
+  "address": "[data-id='address']",
+  "delete button": "[data-id='delete-button']",
+  "create button": "[data-id='add-button']",
+  "playground button": "[data-id='playground-button']"
 }

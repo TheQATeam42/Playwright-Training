@@ -1,0 +1,10 @@
+{
+  "name": "[data-id='name']",
+  "gender": "[data-id='gender']",
+  "phone": "[data-id='phone']",
+  "street": "[data-id='street']",
+  "city": "[data-id='city']",
+  "save": "[data-id='save-button']",
+  "cancel": "[data-id='cancel-button']",
+  "error message": "[data-id='error-message']"
+}
