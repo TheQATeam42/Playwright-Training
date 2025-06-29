@@ -5,6 +5,7 @@ import {globalConfig} from ".."
 import {getElement} from "../support/elements-helper"
 import {selectMoviesComboBoxOption, selectRandomMoviesComboBoxOption} from "../steps/combobox-steps"
 import {checkSwitchDisabledByClick} from "../steps/switch-steps"
+import {checkTableDataRows, checkTableHeaderRow, checkTableRowsCount} from "../steps/table-steps"
 
 
 test.beforeEach(async ({page}) => {
@@ -46,4 +47,12 @@ test("Switches", async ({page}): Promise<void> => {
     // Check by clicking
     expect(await checkSwitchDisabledByClick(switch1)).toBe(false)
     expect(await checkSwitchDisabledByClick(switch2)).toBe(true)
+})
+
+test("Table", async ({page}): Promise<void> => {
+    const observedTable: Locator = await getElement(page, "basic table", globalConfig)
+
+    checkTableRowsCount(observedTable)
+    await checkTableHeaderRow(observedTable)
+    await checkTableDataRows(observedTable)
 })

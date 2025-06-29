@@ -3,5 +3,6 @@
     "movies combobox options": "[id='movies-input-listbox']",
     "checkbox": "input[type='checkbox'][data-id$='-radio-button']",
     "switch one": "[data-id='switch-one']",
-    "switch two": "[data-id='switch-two']"
+    "switch two": "[data-id='switch-two']",
+    "basic table": "[data-id='basic-table']"
 }
