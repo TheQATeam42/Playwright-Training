@@ -1,6 +1,6 @@
 {
-    "autcomplete combobox": "[id='movies-input']",
-    "autcomplete combobox options": "[id='movies-input-listbox']",
+    "movies combobox": "[id='movies-input']",
+    "movies combobox options": "[id='movies-input-listbox']",
     "checkbox": "input[type='checkbox'][data-id$='-radio-button']",
     "switch one": "[data-id='switch-one']",
     "switch two": "[data-id='switch-two']"
