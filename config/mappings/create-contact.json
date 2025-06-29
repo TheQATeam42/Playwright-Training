@@ -1,0 +1,9 @@
+{
+    "create contact form": "[data-id='contact-form']",
+    "contact name field": "[data-id='name']",
+    "contact gender field": "[data-id='gender']",
+    "contact phone field": "[data-id='phone']",
+    "contact street field": "[data-id='street']",
+    "contact city field": "[data-id='city']",
+    "contact error message": "[data-id='error-message']"
+}

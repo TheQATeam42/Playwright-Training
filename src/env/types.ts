@@ -3,11 +3,11 @@
  * it makes the code much cleaner when we have complicated type
  * such as the pagesConfig type, which is a Record of a string and a Record
  */
-// this type refers to the objects in pages.json
+// This type refers to the objects in pages.json
 export type PageId = string
 export type ElementKey = string
 export type ElementLocator = string
-// object for the element, it has the pageId, its name and its locator
+// Object for the element, it has the pageId, its name and its locator
 export type PageElementMappings = Record<PageId, Record<ElementKey, ElementLocator>>
 export type PagesConfig = Record<PageId, string>
 

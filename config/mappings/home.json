@@ -1,3 +1,6 @@
 {
-  "contacts title": "[data-id='contacts']"
+  "contacts title": "[data-id='contacts']",
+  "search bar": "[data-id='search']",
+  "contact item": "[class='ContactItem']",
+  "contact item name": "[data-id='name']"
 }

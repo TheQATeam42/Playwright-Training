@@ -1,5 +1,5 @@
-import { ElementKey, GlobalConfig } from "../env/types"
-import { getCurrentPageId } from "./navigation-behavior"
+import {ElementKey, GlobalConfig} from "../env/types"
+import {getCurrentPageId} from "./navigation-behavior"
 import {Locator, Page} from "@playwright/test"
 
 
@@ -20,12 +20,13 @@ export const getElementIdentifier = async (
     elementKey: ElementKey,
     globalConfig: GlobalConfig
 ): Promise<string> => {
-    const { pageElementMappings } = globalConfig
+    const {pageElementMappings} = globalConfig
     const currentPage = await getCurrentPageId(page, globalConfig)
     const elementIdentifier = pageElementMappings[currentPage]?.[elementKey] || pageElementMappings.common?.[elementKey]
     if (!elementIdentifier) {
         throw Error(`Error, unable to find the ${elementKey} mappings`)
     }
+
     return elementIdentifier
 }
 
