@@ -1,0 +1,7 @@
+{ 
+  "searchBarSelector": "[data-id='search']",
+  "contacts title": "[data-id='contacts']",
+  "singleContact": "[data-id='contact']",
+  "contactName": "[data-id='name']",
+  "deleteContactButton": "[data-id='delete-button']"
+}
