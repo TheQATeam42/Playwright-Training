@@ -1,3 +1,5 @@
 {
-  "home": "/"
+  "homePage": "/",
+  "createContact": "/tasks/create",
+  "playground": "/playground"
 }
