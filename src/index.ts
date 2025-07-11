@@ -1,7 +1,7 @@
 import dotenv from "dotenv"
-import {env, getJsonFromFile} from "./env/parseEnv"
+import { env, getJsonFromFile } from "./env/parseEnv"
 import fs from "fs"
-import {GlobalConfig, PageElementMappings} from "./env/types"
+import { GlobalConfig, PageElementMappings } from "./env/types"
 
 
 dotenv.config({ path: "./common.env" })
@@ -15,13 +15,13 @@ const mappingFiles = fs.readdirSync(`${process.cwd()}${env('PAGE_ELEMENTS_PATH')
 const pageElementMappings: PageElementMappings =
     // reduce = gets an array and executes a function based on the array, with parameter
     mappingFiles.reduce((pageElementConfigAcc, file: string) => {
-            // remove the json word to get the key
-            const key = file.replace('.json', '')
-            // gets all the element mappings out of the pages files
-            const elementMappings = getJsonFromFile(`${env('PAGE_ELEMENTS_PATH')}${file}`)
-            // return object containing each page and its mappings
-            return { ...pageElementConfigAcc, [key]: elementMappings }
-        },
+        // remove the json word to get the key
+        const key = file.replace('.json', '')
+        // gets all the element mappings out of the pages files
+        const elementMappings = getJsonFromFile(`${env('PAGE_ELEMENTS_PATH')}${file}`)
+        // return object containing each page and its mappings
+        return { ...pageElementConfigAcc, [key]: elementMappings }
+    },
         {}
     )
 

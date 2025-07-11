@@ -1,6 +1,6 @@
 import { ElementKey, GlobalConfig } from "../env/types"
 import { getCurrentPageId } from "./navigation-behavior"
-import {Locator, Page} from "@playwright/test"
+import { Locator, Page } from "@playwright/test"
 
 
 /**

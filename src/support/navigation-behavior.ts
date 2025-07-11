@@ -1,5 +1,5 @@
-import {GlobalConfig, PageId} from "../env/types"
-import {Page} from "@playwright/test"
+import { GlobalConfig, PageId } from "../env/types"
+import { Page } from "@playwright/test"
 
 
 /**
@@ -21,12 +21,12 @@ export const navigateToPage = async (page: Page, pageId: string, globalConfig: G
  * @param globalConfig
  */
 export const getCurrentPageId = async (page: Page, globalConfig: GlobalConfig): Promise<PageId> => {
-    const {pagesConfig} = globalConfig
+    const { pagesConfig } = globalConfig
     const currentURL: string = page.url()
     // returns the keys from the pages.json file, which are the pageId's
     const pageConfigPageId = Object.keys(pagesConfig)
     // get the current page URL route
-    const {pathname: currentPath} = new URL(currentURL)
+    const { pathname: currentPath } = new URL(currentURL)
     // searches for the pageId based on the regex of the url
     let currentPageId = ""
     for (const pageId of pageConfigPageId) {
