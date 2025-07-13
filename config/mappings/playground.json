@@ -1,0 +1,8 @@
+{
+    "autoCompleteComboBoxDropDown": "[data-testid='ArrowDropDownIcon']",
+    "autoCompleteComboBoxInput": "#movies-input",
+    "autoCompleteComboBoxCloseIcon": "[data-testid='CloseIcon']",
+    "checkBox": "[data-id$='-radio-button']",
+    "checkedCheckbox": "[data-testid='CheckBoxIcon']",
+    "uncheckedCheckbox": "[data-testid$='CheckBoxOutlineBlankIcon']"
+}
