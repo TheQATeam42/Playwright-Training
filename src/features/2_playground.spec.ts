@@ -7,6 +7,7 @@ import { getElement } from "../support/elements-helper";
 
 const testedMovieName: string = "The Godfather: Part II"
 const pageName: string = "playground"
+const checkboxesIndexes: { first: number, last: number } = { first: 2, last: 6 }
 
 test("Search for a movie", async ({ page }): Promise<void> => {
     await navigateToPage(page, pageName, globalConfig)
@@ -36,30 +37,27 @@ test("Search for a movie", async ({ page }): Promise<void> => {
 test("Check checkboxes", async ({ page }): Promise<void> => {
     await navigateToPage(page, pageName, globalConfig)
 
-    await test.step("Get all checkboxes", async (): Promise<void> => {
-        const boxes = await getElement(page, "checkBox", globalConfig)
-        console.log(`await boxes.count(): ${await boxes.count()}`)
+    const checkboxes: Locator[] = await test.step("Get all checkboxes in the given section", async (): Promise<Locator[]> => {
+        const allBoxes: Locator = await getElement(page, "checkBox", globalConfig)
+        const boxesCount: number = await allBoxes.count()
 
-        const checkBoxes = page.getByRole("checkbox")
-        console.log(`await checkBoxes.count(): ${await checkBoxes.count()}`)
+        expect(boxesCount).toBeGreaterThanOrEqual(checkboxesIndexes.last - checkboxesIndexes.first + 1)
 
-        const count: number = await boxes.count()
+        const testedBoxes: Locator[] = []
 
-        for (let i = 0; i < count; i++) {
-            const cb = checkBoxes.nth(i);
-
-            const visible = await cb.isVisible();
-            const checked = await cb.isChecked?.().catch(() => 'N/A'); // fallback for non-<input>
-            const label = await cb.getAttribute("aria-label") ?? "No aria-label";
-            const testId = await cb.getAttribute("data-testid");
-            const className = await cb.getAttribute("class");
-
-            console.log(`--- Checkbox ${i} ---`);
-            console.log(`Visible: ${visible}`);
-            console.log(`Checked: ${checked}`);
-            console.log(`Aria-label: ${label}`);
-            console.log(`data-testid: ${testId}`);
-            console.log(`Class: ${className}`);
+        for (let i = checkboxesIndexes.first; i < boxesCount && i <= checkboxesIndexes.last; i++) {
+            testedBoxes.push(allBoxes.nth(i))
         }
+
+        return testedBoxes
     })
+
+    for (const [index, checkBox] of checkboxes.entries()) {
+        await test.step(`Check checkbox #${index} inputs`, async () => {
+            expect(await checkBox.isChecked()).toBeFalsy()
+            await checkBox.check();
+            expect(await checkBox.isChecked()).toBeTruthy()
+
+        })
+    }
 })
