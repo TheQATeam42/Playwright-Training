@@ -4,5 +4,8 @@
     "autoCompleteComboBoxCloseIcon": "[data-testid='CloseIcon']",
     "checkBox": "[data-id$='-radio-button']",
     "checkedCheckbox": "[data-testid='CheckBoxIcon']",
-    "uncheckedCheckbox": "[data-testid$='CheckBoxOutlineBlankIcon']"
+    "uncheckedCheckbox": "[data-testid$='CheckBoxOutlineBlankIcon']",
+    "enableSwitch": "[data-id='switch-one']",
+    "disableSwitch": "[data-id='switch-two']",
+    "switch": "[data-id^='switch-']"
 }

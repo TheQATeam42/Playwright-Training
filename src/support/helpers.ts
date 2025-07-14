@@ -84,3 +84,8 @@ export const createPartialObjectVersions = (obj: Record<any, any>)
 
     return versions
 }
+
+export const checkField = async (element: Locator): Promise<void> => {
+    const isChecked: boolean = await element.isChecked()
+    isChecked ? await element.uncheck() : await element.check()
+}

@@ -1,9 +1,14 @@
 import { expect, Locator } from "@playwright/test";
 import { globalConfig } from "..";
 import { test } from "../setup/hooks";
-import { clickButton, typeInput } from "../support/helpers";
+import { checkField, clickButton, typeInput } from "../support/helpers";
 import { navigateToPage } from "../support/navigation-behavior";
 import { getElement } from "../support/elements-helper";
+
+export interface SwitchInfo {
+    switch: Locator,
+    isEnabled: boolean
+}
 
 const testedMovieName: string = "The Godfather: Part II"
 const pageName: string = "playground"
@@ -57,7 +62,38 @@ test("Check checkboxes", async ({ page }): Promise<void> => {
             expect(await checkBox.isChecked()).toBeFalsy()
             await checkBox.check();
             expect(await checkBox.isChecked()).toBeTruthy()
+        })
+    }
+})
 
+test("Test switches", async ({ page }): Promise<void> => {
+    await navigateToPage(page, pageName, globalConfig)
+
+    const switches: Locator[] = await test.step("Find all switches", async (): Promise<Locator[]> => {
+        const allSwitches: Locator = await getElement(page, "switch", globalConfig)
+        const switchesAmount = await allSwitches.count()
+        const switches: Locator[] = []
+
+        for (let i = 0; i < switchesAmount; i++) {
+            switches.push(allSwitches.nth(i))
+        }
+
+        return switches
+    })
+
+    for (const [index, currentSwitch] of switches.entries()) {
+        await test.step(`Check switch #${index} is enabled/ disabled`, async () => {
+            const isCurrentSwitchEnabled: boolean = await currentSwitch?.isEnabled()
+
+            if (!isCurrentSwitchEnabled) {
+                expect(currentSwitch).toBeDisabled()
+                return
+            }
+
+            const originalIsChecked: boolean = await currentSwitch.isChecked()
+            await checkField(currentSwitch)
+
+            expect(await currentSwitch.isChecked()).toEqual(!originalIsChecked)
         })
     }
 })
