@@ -1,6 +1,6 @@
-import { expect, Locator, Page } from "@playwright/test";
-import { getElement } from "./elements-helper";
+import { Locator, Page } from "@playwright/test";
 import { globalConfig } from "..";
+import { getElement } from "./elements-helper";
 
 export const typeInput = async (page: Page, input: string, inputFieldKey: string): Promise<Locator> => {
     const inputField: Locator = await getElement(page, inputFieldKey, globalConfig)

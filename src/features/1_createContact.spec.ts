@@ -1,37 +1,12 @@
 import { expect, Locator } from "@playwright/test"
 import { globalConfig } from ".."
-import { test } from "../setup/hooks"
-import { getElement } from "../support/elements-helper"
-import { createPartialObjectVersions, formSubmission } from "../support/helpers"
-import { getCurrentPageId, navigateToPage } from "../support/navigation-behavior"
-import { env, getJsonFromFile } from "../env/parseEnv"
-import pages from '../../config/pages.json';
 import { PageId } from "../env/types"
-
-
-// const pagesConfig: Record<string, string> = getJsonFromFile(env('PAGES_URLS_PATH'))
-
-enum Gender {
-    male = "Male",
-    female = "Female",
-    other = "Other"
-}
-
-export interface Contact {
-    name: string,
-    gender: Gender,
-    phone: number,
-    street: string,
-    city: string,
-}
-
-const newContact: Contact = {
-    name: "nameTest",
-    gender: Gender.male,
-    phone: 972512345678,
-    street: "streetTest",
-    city: "cityTest"
-}
+import { test } from "../setup/hooks"
+import { createPartialObjectVersions, formSubmission } from "../support/actionsHelpers"
+import { createContactPageKey, elementsKeys, getExpectedError, newContact, pageName } from "../support/Configurations/1_createContactConfig"
+import { getElement } from "../support/elements-helper"
+import { Contact } from "../support/Interfaces/Contact"
+import { getCurrentPageId, navigateToPage } from "../support/navigation-behavior"
 
 let testCases: {
     missing: string,
@@ -39,35 +14,33 @@ let testCases: {
     isFullInfo: boolean
 }[] = createPartialObjectVersions(newContact)
 
-const createContactPageKey: string = "createContact"
-
 testCases.forEach(({ missing: testCase, data, isFullInfo }) => {
     test(`Create new contact (missing ${testCase}) and checks it was created successfully`, async ({ page }): Promise<void> => {
-        await navigateToPage(page, "createContact", globalConfig)
+        await navigateToPage(page, pageName, globalConfig)
 
         // Fills and submits form with new contact's info
-        await formSubmission(page, data, "saveButton")
+        await formSubmission(page, data, elementsKeys.saveButton)
         const currentPage: PageId = await getCurrentPageId(page, globalConfig);
 
         if (!isFullInfo && currentPage === createContactPageKey) {
             // Checks the expected error was occurred
-            const error: Locator = await getElement(page, "error", globalConfig)
-            await expect(error).toHaveText(`Error: The "${testCase}" field can't be empty.`)
+            const error: Locator = await getElement(page, elementsKeys.error, globalConfig)
+            await expect(error).toHaveText(getExpectedError(testCase))
         } else {
             // Checks the new contact was created successfully
-            const contactNameField: Locator = await getElement(page, "contactName", globalConfig)
+            const contactNameField: Locator = await getElement(page, elementsKeys.contactName, globalConfig)
             expect(await contactNameField.allTextContents()).toContain(newContact.name);
         }
     })
 });
 
 test("Test clicking on 'cancel' instead of 'create' after filling a new contact info", async ({ page }): Promise<void> => {
-    await navigateToPage(page, "createContact", globalConfig)
+    await navigateToPage(page, pageName, globalConfig)
 
     // Fills and submits form with new contact's info
-    await formSubmission(page, newContact, "cancelButton")
+    await formSubmission(page, newContact, elementsKeys.cancelButton)
 
     // Checks the contact was not created
-    const contactNameField = await getElement(page, "contactName", globalConfig)
+    const contactNameField = await getElement(page, elementsKeys.contactName, globalConfig)
     expect(await contactNameField.allTextContents()).not.toContain(newContact.name);
 })

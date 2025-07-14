@@ -1,13 +1,11 @@
+import { Locator } from "@playwright/test"
 import { expect } from "playwright/test"
 import { globalConfig } from "../index"
-import { getElement } from "../support/elements-helper"
-import { Locator } from "@playwright/test"
 import { test } from "../setup/hooks"
-import { clearInput, clickButton, typeInput } from "../support/helpers"
+import { clearInput, clickButton, typeInput } from "../support/actionsHelpers"
+import { contactsResultAmountOnSearch, contactTitleContains, elementsKeys, testedContactName, testedSearchbar } from "../support/Configurations/0_homePageConfig"
+import { getElement } from "../support/elements-helper"
 
-
-const testedContactName: string = "Alea Nieves"
-const testedSearchbar: string = "searchBarSelector"
 /*
     Here you write all the scenarios of the homePage.
     Scenarios are all the actions that you can do in a feature (small titles to big title)
@@ -24,31 +22,41 @@ test("Full home page test", async ({ page }): Promise<void> => {
         await dialog.accept(); // Accepts the alert
     })
 
-    // Checks the home page title
-    const contractsTitle: Locator = await getElement(page, "contacts title", globalConfig)
-    await expect(contractsTitle).toHaveText("Contacts");
+    await test.step("Test the home page title", async (): Promise<void> => {
+        const contractsTitle: Locator = await getElement(page, elementsKeys.contactsTitle, globalConfig)
+        await expect(contractsTitle).toHaveText(contactTitleContains);
+    })
 
-    // Searches a name out of the contacts list
-    let searchBar: Locator = await typeInput(page, testedContactName, testedSearchbar)
-    await expect(searchBar).toHaveValue(testedContactName)
+    let searchBar: Locator = await test.step("Search a name out of the contacts list", async (): Promise<Locator> => {
+        let searchBar: Locator = await typeInput(page, testedContactName, testedSearchbar)
+        await expect(searchBar).toHaveValue(testedContactName)
 
-    // Checks tested name is found
-    let contactNameField: Locator = await getElement(page, "contactName", globalConfig)
-    await expect(contactNameField).toHaveText(testedContactName);
+        return searchBar
+    })
 
-    // Checks the there is an only result for the searched name
-    const contacts: Locator = await getElement(page, "singleContact", globalConfig)
-    await expect(contacts).toHaveCount(1)
+    let contactNameField: Locator = await test.step("Check tested name is found", async (): Promise<Locator> => {
+        let contactNameField: Locator = await getElement(page, elementsKeys.contactName, globalConfig)
+        await expect(contactNameField).toHaveText(testedContactName);
 
-    // Deletes the searched contact
-    await clickButton(page, "deleteContactButton")
+        return contactNameField
+    })
 
-    // Clears the search bar
-    searchBar = await clearInput(page, testedSearchbar)
-    await expect(searchBar).toHaveValue("");
+    await test.step("Checks the there is an only result for the searched name", async (): Promise<void> => {
+        const contacts: Locator = await getElement(page, elementsKeys.singleContact, globalConfig)
+        await expect(contacts).toHaveCount(contactsResultAmountOnSearch)
+    })
 
-    // Checks the name was deleted successfully
-    contactNameField = await getElement(page, "contactName", globalConfig)
-    await expect(await contactNameField.allTextContents()).not.toContain(testedContactName);
+    await test.step("Deletes the searched contact", async (): Promise<void> => {
+        await clickButton(page, elementsKeys.deleteContactButton)
+    })
 
+    await test.step("Clears the search bar", async (): Promise<void> => {
+        searchBar = await clearInput(page, testedSearchbar)
+        await expect(searchBar).toHaveValue("");
+    })
+
+    await test.step("Checks the name was deleted successfully", async (): Promise<void> => {
+        contactNameField = await getElement(page, elementsKeys.contactName, globalConfig)
+        expect(await contactNameField.allTextContents()).not.toContain(testedContactName);
+    })
 })
