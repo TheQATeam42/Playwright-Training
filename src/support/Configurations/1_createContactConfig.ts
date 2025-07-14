@@ -1,6 +1,14 @@
 import { Gender } from "../Enums/Gender"
 import { Contact } from "../Interfaces/Contact"
 
+// Elements' keys
+export const elementsKeys = {
+    saveButton: "saveButton",
+    error: "error",
+    contactName: "contactName",
+    cancelButton: "cancelButton"
+}
+
 export const newContact: Contact = {
     name: "nameTest",
     gender: Gender.male,
@@ -11,14 +19,6 @@ export const newContact: Contact = {
 
 export const createContactPageKey: string = "createContact"
 export const pageName: string = "createContact"
-
-// Elements' keys
-export const elementsKeys = {
-    saveButton: "saveButton",
-    error: "error",
-    contactName: "contactName",
-    cancelButton: "cancelButton"
-}
 
 export const getExpectedError = (testCase: string): string => {
     return `Error: The "${testCase}" field can't be empty.`
