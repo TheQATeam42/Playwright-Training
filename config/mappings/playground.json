@@ -7,5 +7,8 @@
     "uncheckedCheckbox": "[data-testid$='CheckBoxOutlineBlankIcon']",
     "enableSwitch": "[data-id='switch-one']",
     "disableSwitch": "[data-id='switch-two']",
-    "switch": "[data-id^='switch-']"
+    "switch": "[data-id^='switch-']",
+    "table": "[data-id='basic-table']",
+    "tableRow": "[data-id='basic-table'] tbody tr",
+    "tableCell": "td"
 }

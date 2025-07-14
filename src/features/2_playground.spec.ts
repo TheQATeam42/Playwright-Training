@@ -2,7 +2,7 @@ import { expect, Locator } from "@playwright/test";
 import { globalConfig } from "..";
 import { test } from "../setup/hooks";
 import { checkField, clickButton, typeInput } from "../support/actionsHelpers";
-import { checkboxesIndexes, elementsKeys, pageName, testedMovieName } from "../support/Configurations/2_playgroundConfig";
+import { checkboxesIndexes, elementsKeys, pageName, tableContent, testedMovieName } from "../support/Configurations/2_playgroundConfig";
 import { getElement } from "../support/elements-helper";
 import { navigateToPage } from "../support/navigation-behavior";
 
@@ -86,6 +86,39 @@ test("Test switches", async ({ page }): Promise<void> => {
             await checkField(currentSwitch)
 
             expect(await currentSwitch.isChecked()).toEqual(!originalIsChecked)
+        })
+    }
+})
+
+test("Test table", async ({ page }): Promise<void> => {
+    await navigateToPage(page, pageName, globalConfig)
+
+    const table: Locator = await test.step("Find table", async (): Promise<Locator> => {
+        const table: Locator = await getElement(page, elementsKeys.table, globalConfig)
+        await expect(table).toBeVisible();
+
+        return table
+    })
+
+    const rows: Locator = await test.step("Test all deserts are in table", async (): Promise<Locator> => {
+        const rows: Locator = await getElement(page, elementsKeys.tableRow, globalConfig);
+        await expect(rows).toHaveCount(tableContent.length);
+
+        return rows
+    })
+
+    for (let rowIndex = 0; rowIndex < tableContent.length; rowIndex++) {
+        await test.step(`Test row number #${rowIndex}`, async (): Promise<void> => {
+            const currentRow = rows.nth(rowIndex);
+            await expect(currentRow).toBeVisible();
+            const cells = currentRow.locator(elementsKeys.tableCell);
+            const dessert = tableContent[rowIndex];
+
+            await expect(cells.nth(0)).toHaveText(dessert.getName())
+            await expect(cells.nth(1)).toHaveText(dessert.getCalories().toString())
+            await expect(cells.nth(2)).toHaveText(dessert.getFat().toString())
+            await expect(cells.nth(3)).toHaveText(dessert.getCarbs().toString())
+            await expect(cells.nth(4)).toHaveText(dessert.getProtein().toString())
         })
     }
 })
