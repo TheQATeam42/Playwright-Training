@@ -30,7 +30,8 @@ bower_components
 # Editors
 .idea
 *.iml
-.vscode
+.vscode/*
+!.vscode/settings.json
 
 # OS metadata
 .DS_Store

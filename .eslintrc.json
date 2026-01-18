@@ -1,0 +1,64 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true
+  },
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
+    "indent": ["error", 2],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "all",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "ignoreRestSiblings": true,
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "require-await": "error",
+    "object-curly-spacing": ["error", "always"]
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "semi": ["error", "always"],
+        "quotes": ["error", "double"],
+        "indent": ["error", 2],
+        "require-await": "error",
+        "object-curly-spacing": ["error", "always"],
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "args": "all",
+            "argsIgnorePattern": "^_",
+            "caughtErrors": "all",
+            "caughtErrorsIgnorePattern": "^_",
+            "destructuredArrayIgnorePattern": "^_",
+            "ignoreRestSiblings": true,
+            "varsIgnorePattern": "^_"
+          }
+        ]
+      }
+    }
+  ]
+}

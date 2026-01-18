@@ -1,33 +1,32 @@
-import { defineConfig } from '@playwright/test'
+import { defineConfig } from "@playwright/test";
+import { BrowserConfig } from "./src/utils/parseEnv.util";
 
 export default defineConfig({
-  /* Tell the test runner where are the test files */
-  testDir: "./src/features",
-  /* Max time one test can run for */
+  testDir: "./src/tests",
   timeout: 30 * 1000,
   expect: {
     timeout: 5 * 1000,
   },
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  // Understanding of full screen: https://stackoverflow.com/questions/71407251/playwright-wont-launch-full-screen
+  reporter: [
+    ["html", { outputFolder: "playwright-report", open: "never" }],
+    ["junit", { outputFile: "playwright-report/xml-report.xml" }],
+  ],
   use: {
     launchOptions: {
-      args: ["--start-maximized"]
+      args: ["--start-maximized"],
     },
+    testIdAttribute: "data-test",
   },
-
   projects: [
     {
       name: "chromium",
       use: {
         browserName: "chromium",
         viewport: null,
-        headless: false,
+        headless: BrowserConfig.headless,
         screenshot: "on",
-        trace: "retain-on-failure" // will show all errors of the steps as a video
+        trace: "retain-on-failure",
       },
     },
   ],
-})
+});
