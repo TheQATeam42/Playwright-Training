@@ -1,5 +1,8 @@
 import { defineConfig } from "@playwright/test";
-import { BrowserConfig } from "./src/utils/parseEnv.util";
+import {
+  BrowserConfig,
+  EnvironmentConfig,
+} from "./sharedFiles/utils/parseEnv.util";
 
 export default defineConfig({
   testDir: "./src/tests",
@@ -16,17 +19,22 @@ export default defineConfig({
       args: ["--start-maximized"],
     },
     testIdAttribute: "data-test",
+    browserName: "chromium",
+    headless: BrowserConfig.headless,
+    viewport: null,
+    screenshot: "on",
+    trace: "retain-on-failure",
   },
   projects: [
     {
-      name: "chromium",
-      use: {
-        browserName: "chromium",
-        viewport: null,
-        headless: BrowserConfig.headless,
-        screenshot: "on",
-        trace: "retain-on-failure",
-      },
+      name: "react app",
+      testDir: "srcReactApp",
+      use: { baseURL: EnvironmentConfig.reactAppUrl },
+    },
+    {
+      name: "swag labs",
+      testDir: "srcSwagLabs",
+      use: { baseURL: EnvironmentConfig.swagLabsUrl },
     },
   ],
 });

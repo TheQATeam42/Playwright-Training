@@ -1,4 +1,4 @@
-import UrlHelper from "../../utils/urlHelper.util";
+import UrlHelper from "../../../sharedFiles/utils/urlHelper.util";
 import baseTest from "./initPages.setup";
 
 /**
@@ -16,8 +16,10 @@ const swagLabsTest = baseTest;
  * @param {Object} context - Playwright test context
  * @param {Page} context.page - The Playwright page object for the current test
  */
-swagLabsTest.beforeEach(async ({ page }) => {
-  await page.goto(UrlHelper.url);
+swagLabsTest.beforeEach(async ({ page }, testInfo) => {
+  const baseUrl = (testInfo.project.use as any)?.baseURL as string;
+  UrlHelper.setBaseUrl(baseUrl);
+  await page.goto(UrlHelper.baseUrl);
 });
 
 /**
