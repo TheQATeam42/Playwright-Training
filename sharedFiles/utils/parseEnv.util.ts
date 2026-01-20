@@ -76,4 +76,25 @@ class BrowserConfig {
   }
 }
 
-export { BrowserConfig };
+/**
+ * Provides configuration for environment settings loaded from environment variables
+ */
+class EnvironmentConfig {
+  /**
+   * Gets the base url of the swagLabs app
+   * @returns The base url of swagLabs app
+   */
+  static get swagLabsUrl(): string {
+    return readStringEnv("SWAG_BASE_URL");
+  }
+
+  /**
+   * Gets the base url of the reactApp app
+   * @returns The base url of reactApp app
+   */
+  static get reactAppUrl(): string {
+    return readStringEnv("REACT_BASE_URL");
+  }
+}
+
+export { BrowserConfig, EnvironmentConfig };

@@ -1,11 +1,10 @@
-import UrlHelper from "../../utils/urlHelper.util";
 import baseTest from "./initPages.setup";
 
 /**
  * Extended test fixture for the application tests.
  * Inherits fixtures and configurations from baseTest.
  */
-const swagLabsTest = baseTest;
+const reactAppTest = baseTest;
 
 /**
  * beforeEach Hook - Executes before each test
@@ -16,8 +15,9 @@ const swagLabsTest = baseTest;
  * @param {Object} context - Playwright test context
  * @param {Page} context.page - The Playwright page object for the current test
  */
-swagLabsTest.beforeEach(async ({ page }) => {
-  await page.goto(UrlHelper.url);
+reactAppTest.beforeEach(async ({ page }, testInfo) => {
+  const baseUrl = (testInfo.project.use as any)?.baseURL as string;
+  await page.goto(baseUrl);
 });
 
 /**
@@ -29,8 +29,8 @@ swagLabsTest.beforeEach(async ({ page }) => {
  * @param {Object} context - Playwright test context
  * @param {Page} context.page - The Playwright page object for the current test
  */
-swagLabsTest.afterEach(async ({ page }) => {
+reactAppTest.afterEach(async ({ page }) => {
   await page.close();
 });
 
-export default swagLabsTest;
+export default reactAppTest;

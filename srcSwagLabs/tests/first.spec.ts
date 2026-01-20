@@ -16,7 +16,9 @@ enum Users {
   STANDARD_USER = "standard_user",
 }
 
-swagLabsTest(
+const loginTest = swagLabsTest.extend({});
+
+loginTest(
   "Write here the name of the test",
   async ({ loginPage }): Promise<void> => {
     loginPage().usernameInput.fill(Users.STANDARD_USER);
