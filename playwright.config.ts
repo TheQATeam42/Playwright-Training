@@ -5,7 +5,6 @@ import {
 } from "./sharedFiles/utils/parseEnv.util";
 
 export default defineConfig({
-  testDir: "./src/tests",
   timeout: 30 * 1000,
   expect: {
     timeout: 5 * 1000,
