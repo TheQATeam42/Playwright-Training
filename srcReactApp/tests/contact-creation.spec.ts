@@ -5,7 +5,7 @@ import UrlHelper from "../../sharedFiles/utils/urlHelper.util";
 import ReactAppEndpoints from "../utils/endpoints.util";
 
 /**
- * Contact List - Create Behavior
+ * Add Contact Form - Add valid input Behavior
  */
 
 const contactsListTest = reactAppTest.extend({});
@@ -38,7 +38,9 @@ contactsListTest(
     //---------------------------
     // 3️⃣ Validate that the contact creation form is displayed
     //---------------------------
-    await UrlHelper.validateUrl(ReactAppEndpoints.CREATE, page);
+    await expect(
+      await UrlHelper.validateUrl(ReactAppEndpoints.CREATE, page)
+    ).toBeTruthy();
 
     //make sure form title is correct
     await expect(
@@ -62,7 +64,9 @@ contactsListTest(
     //---------------------------
     // 6️⃣ Validate that the we are navigated back to the contacts list and the title is correct
     //---------------------------
-    await UrlHelper.validateUrl(ReactAppEndpoints.NONE, page);
+    await expect(
+      await UrlHelper.validateUrl(ReactAppEndpoints.NONE, page)
+    ).toBeTruthy();
     await expect(page.locator('[data-id="contacts"]')).toContainText(
       contactsListTitle
     );
