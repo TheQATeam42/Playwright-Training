@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
-import lazyFixture from "../../../sharedFiles/utils/lazyFixture.util";
-import Contacts from "../../pages/contactsList.page";
+import lazyFixture from "../../sharedFiles/utils/lazyFixture.util";
+import Contacts from "../pages/contacts.page";
 
 /**
  * Represents a collection of page objects for the application.
