@@ -13,6 +13,7 @@ export default class Contacts extends BasePage {
   public readonly searchBar: Locator;
   public readonly createButton: Locator;
   public readonly contactCards: Locator;
+  public readonly contactsHeader: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -20,6 +21,7 @@ export default class Contacts extends BasePage {
     this.searchBar = this.page.locator('input[data-id="search"]');
     this.createButton = this.page.locator('button[data-id="add-button"]');
     this.contactCards = this.page.locator('[data-id="contact"]');
+    this.contactsHeader = this.page.locator('h1[data-id="contacts"]');
   }
 
   contactCard(contactName: string): Locator {
