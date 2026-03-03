@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Locator } from "@playwright/test";
 import BaseComponent from "../../sharedFiles/components/baseComponent.component";
 
 /**
@@ -6,10 +6,22 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
  * This class provides methods and properties to interact with a contact's elements.
  *
  * @extends BaseComponent
- * @param {Page} page - The Playwright Page object representing the current page.
+ * @param {Locator} root - The Playwright Locator object representing the current component.
  */
 export default class Contact extends BaseComponent {
-  constructor(page: Page) {
-    super(page);
+  readonly deleteButton: Locator;
+
+  constructor(root: Locator) {
+    super(root);
+    this.deleteButton = root.locator("[data-id=delete-button]");
+  }
+
+  /**
+   * Delete a contact by clicking on this contact's delete button.
+   */
+  async delete(): Promise<void> {
+    await this.deleteButton.click();
+
+    // Resulting dialog will be handled according to test specific dialog handlers.
   }
 }

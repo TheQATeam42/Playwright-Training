@@ -3,7 +3,8 @@
  * @enum {string}
  */
 enum ReactAppEndpoints {
-  // TODO: Add here all the system endpoints
+  CONTACTS = "",
+  PLAYGROUND = "playground",
 }
 
 export default ReactAppEndpoints;
