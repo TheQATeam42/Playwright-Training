@@ -25,7 +25,7 @@ contactsListTest(
     const name = "Alika Medina";
 
     // Search for the contact.
-    await contacts().search(name);
+    await contacts().searchExists(name);
 
     // Delete the contact.
     const contact = new Contact(contacts().contacts);
@@ -40,6 +40,6 @@ contactsListTest(
 
     // After the refresh, the page should be reinitialized.
     // Search for the contact again and validate that it exists.
-    await contacts().search(name);
+    await contacts().searchExists(name);
   }
 );

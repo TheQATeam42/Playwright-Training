@@ -4,7 +4,8 @@
  */
 enum ReactAppEndpoints {
   CONTACTS = "",
-  PLAYGROUND = "playground",
+  PLAYGROUND = "/playground",
+  CREATE_CONTACT = "/tasks/create",
 }
 
 export default ReactAppEndpoints;

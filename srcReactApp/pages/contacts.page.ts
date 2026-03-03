@@ -1,5 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
 import BasePage from "../../sharedFiles/pages/basePage.page";
+import UrlHelper from "../../sharedFiles/utils/urlHelper.util";
+import ReactAppEndpoints from "../utils/endpoints.util";
 
 /**
  * Represents the contacts list page of the application.
@@ -19,19 +21,31 @@ export default class Contacts extends BasePage {
    */
   readonly contacts: Locator;
 
+  /**
+   * A button which leads to the create contact form.
+   */
+  readonly createButton: Locator;
+
+  /**
+   * The header of the contacts page.
+   */
+  readonly contactsPageHeader: Locator;
+
   constructor(page: Page) {
     super(page);
 
     this.searchInput = page.locator("[data-id=search]");
     this.contacts = page.locator("[data-id=contact]");
+    this.createButton = page.locator("[data-id=add-button]");
+    this.contactsPageHeader = page.locator("[data-id=contacts]");
   }
 
   /**
-   * Search for a certain phrase. Return a locator with the results of the search.
+   * Search for a certain phrase. Validate that a valid result is found.
    * @param search the phrase to execute the search with.
    * @param [isUnique=true] expect there to be only one exact match.
    */
-  async search(search: string, isUnique: boolean = true): Promise<void> {
+  async searchExists(search: string, isUnique: boolean = true): Promise<void> {
     // Fill search bar.
     await this.searchInput.fill(search);
 
@@ -41,5 +55,36 @@ export default class Contacts extends BasePage {
     if (isUnique) {
       await expect(this.contacts).toHaveCount(1);
     }
+  }
+
+  /**
+   * Search for a certain phrase. Validate that no result is found
+   * @param search the phrase to execute the search with.
+   */
+  async searchNotExists(search: string): Promise<void> {
+    // Fill search bar.
+    await this.searchInput.fill(search);
+    // Expect no results.
+    await expect(this.contacts).toHaveCount(0);
+  }
+
+  /**
+   * Check that the create button exists and click it.
+   */
+  async clickCreate(): Promise<void> {
+    await expect(this.createButton).toBeVisible();
+
+    await this.createButton.click();
+  }
+
+  /**
+   * Validate that the contacts page is open.
+   */
+  async validatePageOpen(): Promise<void> {
+    expect(
+      await UrlHelper.validateUrl(ReactAppEndpoints.CONTACTS, this.page)
+    ).toBeTruthy();
+
+    await expect(this.contactsPageHeader).toHaveText("Contacts");
   }
 }
