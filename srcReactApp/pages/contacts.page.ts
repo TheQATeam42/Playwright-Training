@@ -40,7 +40,7 @@ export default class Contacts extends BasePage {
     // Listen for the specific dialog triggered by this action and accept it
     this.page.once("dialog", (dialog) => dialog.accept());
     await foundContact.locator("[data-id='delete-button']").click();
-    console.log(`foundContact: ${foundContact.toString()}`);
+
     console.log(`Deleted contact: ${contactName}`);
   }
 
