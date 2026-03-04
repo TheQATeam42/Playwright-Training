@@ -3,6 +3,13 @@ import reactAppTest from "./setup/testLevelHooks.setup";
 
 const contactsFormTest = reactAppTest.extend({});
 
+contactsFormTest.beforeEach(async ({ contacts, createContactForm }) => {
+  // Navigate to create contact form.
+  await contacts().clickCreate();
+  // Validate that it has been opened.s
+  await createContactForm().validateFormOpen();
+});
+
 /**
  * Create a valid contact and check that it appears in search after saving.
  * After reload, any new contacts should not appear anymore.
@@ -16,11 +23,6 @@ contactsFormTest(
       street: "Cool Street",
       city: "Super Cool City",
     };
-
-    // Navigate to create contact form.
-    await contacts().clickCreate();
-
-    await createContactForm().validateFormOpen();
 
     // Fill the form with valid values and submit.
     await createContactForm().fillFormAndSubmit(contact);
@@ -77,11 +79,7 @@ contactsFormTest(
   if (emptyField) {
     contactsFormTest(
       `Validate form error when field ${emptyField} is empty`,
-      async ({ contacts, createContactForm, page }) => {
-        // Open the create contacts form.
-        await contacts().clickCreate();
-        await createContactForm().validateFormOpen();
-
+      async ({ createContactForm }) => {
         // Fill the form with one empty field each iteration.
         await createContactForm().fillFormAndSubmit(contact);
 
@@ -91,3 +89,26 @@ contactsFormTest(
     );
   }
 });
+
+/**
+ * Check phone number length and type constraints.
+ */
+["abc", "12345678910"].forEach((phone) =>
+  contactsFormTest(
+    `Check phone field validation using invalid value: ${phone}`,
+    async ({ createContactForm }) => {
+      // Fill the form with valid data, except for the phone field and submit.
+      const contactData = {
+        name: "a",
+        phone,
+        street: "b",
+        city: "c",
+      };
+
+      createContactForm().fillFormAndSubmit(contactData);
+
+      // Validate that there is a phone related error.
+      createContactForm().checkForErrorByField("phone");
+    }
+  )
+);
