@@ -14,27 +14,27 @@ import { test, expect } from "@playwright/test";
 
 const contactsListTest = reactAppTest.extend({});
 
-contactsListTest(
-  "Contact Searchbar visible",
-  async ({ page }): Promise<void> => {
-    const searchBar = page.locator('input[data-id="search"]');
-    await expect(searchBar).toBeVisible();
-    searchBar.fill("August Erickson");
+contactsListTest("Contact Searchbar", async ({ page }): Promise<void> => {
+  // Checking if the searchbar exists
+  const searchBar = page.locator('input[data-id="search"]');
+  await expect(searchBar).toBeVisible();
 
-    const contactItems = page.locator('div[data-id="contact"]');
+  // Checking if a certain individual exists
+  let personName = "August Erickson";
+  searchBar.fill(personName);
+  const contactItems = page.locator('div[data-id="contact"]');
+  await expect(contactItems).toHaveCount(1);
 
-    await expect(contactItems).toHaveCount(1);
+  // Checking delete button
+  page.once("dialog", (dialog) => {
+    console.log(dialog.message());
+    dialog.accept();
+  });
+  await contactItems.locator('button[data-id="delete-button"]').click();
+  await expect(contactItems).toHaveCount(0);
 
-    page.once("dialog", (dialog) => {
-      console.log(dialog.message()); // Optional: see the text (e.g., "Are you sure?")
-      dialog.accept(); // This clicks the "OK" or "Confirmation" button
-    });
-
-    await contactItems.locator('button[data-id="delete-button"]').click();
-
-    await expect(contactItems).toHaveCount(0);
-    await page.reload();
-    searchBar.fill("August Erickson");
-    await expect(contactItems).toHaveCount(1);
-  }
-);
+  // Checking if refresh works
+  await page.reload();
+  searchBar.fill(personName);
+  await expect(contactItems).toHaveCount(1);
+});
