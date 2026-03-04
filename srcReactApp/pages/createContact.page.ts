@@ -3,6 +3,7 @@ import BasePage from "../../sharedFiles/pages/basePage.page";
 import { expect } from "playwright/test";
 import UrlHelper from "../../sharedFiles/utils/urlHelper.util";
 import ReactAppEndpoints from "../utils/endpoints.util";
+import { ContactModel } from "../models/contact.model";
 
 /**
  * Represents the create contact form page of the application.
@@ -18,6 +19,7 @@ export default class CreateContact extends BasePage {
   readonly streetField: Locator;
   readonly cityField: Locator;
   readonly saveButton: Locator;
+  readonly errorMessage: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -28,6 +30,7 @@ export default class CreateContact extends BasePage {
     this.streetField = page.locator("[data-id=street]");
     this.cityField = page.locator("[data-id=city]");
     this.saveButton = page.locator("[data-id=save-button]");
+    this.errorMessage = page.locator("[data-id=error-message]");
   }
 
   /**
@@ -43,22 +46,26 @@ export default class CreateContact extends BasePage {
 
   /**
    * Fill the form and submit it.
-   * @param name
-   * @param phone
-   * @param street
-   * @param city
+   * @param contact the required information to build a contact.
    */
-  async fillFormAndSubmit(
-    name: string,
-    phone: string,
-    street: string,
-    city: string
-  ): Promise<void> {
-    await this.nameField.fill(name);
-    await this.phoneField.fill(phone);
-    await this.streetField.fill(street);
-    await this.cityField.fill(city);
+  async fillFormAndSubmit(contact: ContactModel): Promise<void> {
+    await this.nameField.fill(contact.name);
+    await this.phoneField.fill(contact.phone);
+    await this.streetField.fill(contact.street);
+    await this.cityField.fill(contact.city);
 
     await this.saveButton.click();
+  }
+
+  /**
+   * Check if an error message appears in the DOM.
+   * @param field the name of the field that should appear in the error message.
+   */
+  async checkForErrorByField(field: string): Promise<void> {
+    // Verify error message exists.
+    await expect(this.errorMessage).toHaveCount(1);
+
+    // Verify error message text includes field.
+    await expect(this.errorMessage).toContainText(field);
   }
 }

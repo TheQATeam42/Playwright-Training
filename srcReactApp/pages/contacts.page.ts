@@ -72,7 +72,7 @@ export default class Contacts extends BasePage {
    * Check that the create button exists and click it.
    */
   async clickCreate(): Promise<void> {
-    await expect(this.createButton).toBeVisible();
+    await expect(this.createButton).toHaveCount(1);
 
     await this.createButton.click();
   }
