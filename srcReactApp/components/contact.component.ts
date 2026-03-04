@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 import BaseComponent from "../../sharedFiles/components/baseComponent.component";
 
 /**
@@ -9,7 +9,20 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
  * @param {Page} page - The Playwright Page object representing the current page.
  */
 export default class Contact extends BaseComponent {
+  public readonly name: Locator;
+  public readonly gender: Locator;
+  public readonly address: Locator;
+  public readonly deleteButton: Locator;
+  public readonly editButton: Locator;
+
   constructor(page: Page) {
     super(page);
+
+    this.name = page.locator('[data-id="contact"] [data-id="name"]').first();
+    this.gender = page.locator('[data-id="contact"] [data-id="gender"]').first();
+    this.address = page.locator('[data-id="contact"] [data-id="address"]').first();
+    this.deleteButton = page.locator('[data-id="contact"] [data-id="delete-button"]').first();
+    this.editButton = page.locator('[data-id="contact"] [data-id="edit-button"]').first();
   }
+
 }

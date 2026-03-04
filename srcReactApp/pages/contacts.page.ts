@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 import BasePage from "../../sharedFiles/pages/basePage.page";
 
 /**
@@ -9,7 +9,15 @@ import BasePage from "../../sharedFiles/pages/basePage.page";
  * @param {Page} page - The Playwright Page object representing the current page.
  */
 export default class Contacts extends BasePage {
+  public readonly searchInput: Locator;
+  public readonly contactsList: Locator;
+  public readonly pageTitle: Locator;
+
   constructor(page: Page) {
     super(page);
+
+    this.searchInput = page.locator('[data-id="search"]');
+    this.contactsList = page.locator('[data-id="contact"]');
+    this.pageTitle = page.locator('[data-id="contacts"]');
   }
 }
