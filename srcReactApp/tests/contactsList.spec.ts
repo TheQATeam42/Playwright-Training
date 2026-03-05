@@ -1,3 +1,4 @@
+import { DialogUtils } from "../../sharedFiles/utils/dialog.util";
 import reactAppTest from "./setup/testLevelHooks.setup";
 
 /**
@@ -18,7 +19,7 @@ contactsListTest.describe("Contacts List Tests", { tag: "@contacts" }, () => {
       const name = "Alika Medina";
 
       // Accept any alerts that appear.
-      contacts().acceptAlerts();
+      DialogUtils.acceptAlerts(page);
 
       // Search for the contact.
       await contacts().search(name, 1);

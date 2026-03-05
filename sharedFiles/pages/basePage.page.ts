@@ -12,11 +12,4 @@ import { Page } from "playwright";
  */
 export default abstract class BasePage {
   constructor(protected readonly page: Page) {}
-
-  /**
-   * Sets a listener to approve alerts automatically.
-   */
-  async acceptAlerts(): Promise<void> {
-    this.page.on("dialog", (dialog) => dialog.accept());
-  }
 }
