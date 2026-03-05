@@ -56,7 +56,7 @@ addContactListTest("Add Contact", async ({ page }): Promise<void> => {
 
 const addContactsInvalidInput = reactAppTest.extend({});
 addContactsInvalidInput(
-  "Add Contact with invalid input",
+  "Add Contact with empty field input",
   async ({ page }): Promise<void> => {
     // Checking if the create button exists
     const createContactBtn = page.locator('button[data-id="add-button"]');
@@ -64,8 +64,12 @@ addContactsInvalidInput(
 
     // Click button
     await createContactBtn.click();
+
+    // Declaring the elements that will be used later
     let saveBtn = page.locator('button[data-id="save-button"]');
     let errorLabel = page.locator('[data-id="error-message"]');
+
+    // The various fields and accompanying valid values.
     const allFields = [
       { id: "name", value: "Human Name" },
       { id: "phone", value: "0000" },
@@ -73,19 +77,22 @@ addContactsInvalidInput(
       { id: "city", value: "City here" },
     ];
 
+    // Iterating over the field we will skip
     for (const skipField of allFields) {
+      // Iterating over the fields we will fill
       for (const fieldToFill of allFields) {
         if (fieldToFill.id !== skipField.id) {
+          // Filling the relevant fields
           await page
             .locator(`[data-id="${fieldToFill.id}"]`)
             .fill(fieldToFill.value);
         }
-        //  else {
-        //   await page.locator(`[data-id="${fieldToFill.id}"]`).fill("");
-        // }
       }
+      // Checking if saving yielded an error.
       saveBtn.click();
       await expect(errorLabel).toBeVisible();
+
+      // Reloading page.
       await page.reload();
     }
   }
@@ -108,5 +115,9 @@ addContactsInvalidPhoneInput(
     // Invalid Input
     await phoneLabel.fill("1234567890");
     await expect(phoneLabel).toHaveValue("123456789");
+
+    // Should not be able to enter letters.
+    await phoneLabel.fill("abcd");
+    await expect(phoneLabel).toHaveValue("");
   }
 );
