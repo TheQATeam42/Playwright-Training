@@ -12,6 +12,7 @@ export default class Contacts extends BasePage {
   public readonly searchInput: Locator;
   public readonly contactsList: Locator;
   public readonly pageTitle: Locator;
+  public readonly createButton: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -19,6 +20,14 @@ export default class Contacts extends BasePage {
     this.searchInput = page.locator('[data-id="search"]');
     this.contactsList = page.locator('[data-id="contact"]');
     this.pageTitle = page.locator('[data-id="contacts"]');
+    this.createButton = page.locator('[data-id="add-button"]');
+  }
+
+  /**
+   * clicks the create button to navigate to the create contact form.
+   */
+  async clickCreate(): Promise<void> {
+    await this.createButton.click();
   }
 
   /**
