@@ -1,11 +1,11 @@
-import BasePage from "../pages/basePage.page";
+import { Locator } from "playwright";
 
 /**
  * Abstract base class for reusable UI components.
- * Extends BasePage to inherit page object model functionality and provide common component behavior.
- *
+ * Holds a root locator to allow locator functionality while enforcing the components scope.
  * @abstract
  * @class BaseComponent
- * @extends {BasePage}
  */
-export default abstract class BaseComponent extends BasePage {}
+export default abstract class BaseComponent {
+  constructor(protected readonly root: Locator) {}
+}
