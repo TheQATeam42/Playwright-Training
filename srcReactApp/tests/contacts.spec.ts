@@ -1,30 +1,46 @@
 import reactAppTest from "./setup/testLevelHooks.setup";
 import Contacts from "../pages/contacts.page";
 
+/**
+ * Extended test instance for the Contacts List.
+ * Uses the setup hooks defined in testLevelHooks.setup.
+ */
 const contactsListTest = reactAppTest.extend({});
 
+/**
+ * FEATURE: Contact List Management
+ * SCENARIO: Search for a specific contact, verify its presence, delete it, and confirm removal.
+ */
 contactsListTest(
   "Contacts List - Test Suite",
   async ({ page }): Promise<void> => {
-    // create an instance of the page object
+    // 1. Initialize the Page Object
     const contactsPage = new Contacts(page);
+
+    // 2. Search for a specific record
+    // This helps isolate the target contact before verification
     await contactsPage.searchForContact("Ariana Ball");
 
-    // check that the search input is visible
+    // 3. Assert the contact is visible in the UI
     await contactsPage.checkContactIsVisible("Ariana Ball");
 
-    // Check that there is only 1 contact on the list
+    // 4. Assert the result count
+    // Ensures the search filter is working correctly (only 1 result returned)
     await contactsPage.checkContactListLength(1);
 
-    // delete the contact
+    // 5. Delete the contact
+    // Note: The Page Object handles the browser's 'confirm' dialog internally
     await contactsPage.deleteContact("Ariana Ball");
 
-    // check that there are no contacts on the list
+    // 6. Verify removal
+    // The list should update immediately to show 0 contacts
     await contactsPage.checkContactListLength(0);
 
-    // refresh the page to reset the state
+    // 7. Reset the environment
+    // Refreshing allows the test to leave the application in a clean state or verify persistence
     await contactsPage.refreshPage();
 
+    // Final check after refresh to confirm the contact isn't still deleted
     await contactsPage.searchForContact("Ariana Ball");
   }
 );
