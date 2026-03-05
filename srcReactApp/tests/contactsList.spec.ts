@@ -11,33 +11,32 @@ contactsListTest(
   "Delete an existing contact",
   async ({ page, contacts }): Promise<void> => {
     const contactsPage = contacts();
-    const contactComponent = new Contact(page);
+    const contactName = "Jorden Cooper";
 
     //1.check if search is visible
     await expect(contactsPage.searchInput).toBeVisible();
 
     //2.search for a contact
-    const contactName = "Jorden Cooper";
-    await contactsPage.searchInput.fill(contactName);
+    await contactsPage.search(contactName);
 
     //3.verify the contacts name matches
-    await expect(contactComponent.name).toHaveText(contactName);
+    const contact = new Contact(page);
+    await expect(contact.name).toHaveText(contactName);
 
     //4.verify only one contact is shown
     await expect(contactsPage.contactsList).toHaveCount(1);
 
     //5/6.click delete and accept the confirmation dialog
-    page.once("dialog", (dialog) => dialog.accept());
-    await contactComponent.deleteButton.click();
+    await contact.delete();
 
     //7.verify the contact is no longer displayed in the list
     await expect(contactsPage.contactsList).toHaveCount(0);
 
     //8.refresh the page
-    await page.reload();
+    await contactsPage.reload();
 
     //9.search for the same contact again after reload and verify the contact is back
-    await contactsPage.searchInput.fill(contactName);
+    await contactsPage.search(contactName);
     await expect(contactsPage.contactsList).toHaveCount(1);
   }
 );

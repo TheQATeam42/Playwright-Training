@@ -18,11 +18,18 @@ export default class Contact extends BaseComponent {
   constructor(page: Page) {
     super(page);
 
-    this.name = page.locator('[data-id="contact"] [data-id="name"]').first();
-    this.gender = page.locator('[data-id="contact"] [data-id="gender"]').first();
-    this.address = page.locator('[data-id="contact"] [data-id="address"]').first();
-    this.deleteButton = page.locator('[data-id="contact"] [data-id="delete-button"]').first();
-    this.editButton = page.locator('[data-id="contact"] [data-id="edit-button"]').first();
+    this.name = page.locator('[data-id="name"]').first();
+    this.gender = page.locator('[data-id="gender"]').first();
+    this.address = page.locator('[data-id="address"]').first();
+    this.deleteButton = page.locator('[data-id="delete-button"]').first();
+    this.editButton = page.locator('[data-id="edit-button"]').first();
   }
 
+  /**
+   * clicks the delete button and accepts the native confirmation dialog.
+   */
+  async delete(): Promise<void> {
+    this.page.once("dialog", (dialog) => dialog.accept());
+    await this.deleteButton.click();
+  }
 }

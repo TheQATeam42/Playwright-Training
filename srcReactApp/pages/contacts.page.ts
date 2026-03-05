@@ -20,4 +20,18 @@ export default class Contacts extends BasePage {
     this.contactsList = page.locator('[data-id="contact"]');
     this.pageTitle = page.locator('[data-id="contacts"]');
   }
+
+  /**
+   * search for a contact by name
+   */
+  async search(name: string): Promise<void> {
+    await this.searchInput.fill(name);
+  }
+
+  /**
+   * reloads the current page.
+   */
+  async reload(): Promise<void> {
+    await this.page.reload();
+  }
 }
