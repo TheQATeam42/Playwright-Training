@@ -10,18 +10,15 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
  */
 export default class Contact extends BaseComponent {
   readonly deleteButton: Locator;
+  readonly name: Locator;
+  readonly address: Locator;
+  readonly gender: Locator;
 
   constructor(root: Locator) {
     super(root);
-    this.deleteButton = root.locator("[data-id=delete-button]");
-  }
-
-  /**
-   * Delete a contact by clicking on this contact's delete button.
-   */
-  async delete(): Promise<void> {
-    await this.deleteButton.click();
-
-    // Resulting dialog will be handled according to test specific dialog handlers.
+    this.deleteButton = root.getByTestId("delete-button");
+    this.name = root.getByTestId("name");
+    this.address = root.getByTestId("address");
+    this.gender = root.getByTestId("gender");
   }
 }

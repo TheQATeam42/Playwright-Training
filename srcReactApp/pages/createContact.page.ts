@@ -13,24 +13,57 @@ import { ContactModel } from "../models/contact.model";
  * @param {Page} page - The Playwright Page object representing the current page.
  */
 export default class CreateContact extends BasePage {
+  /**
+   * The header of the create contact form.
+   */
   readonly createContactHeader: Locator;
+
+  /**
+   * The name input in the create contact form.
+   */
   readonly nameField: Locator;
+
+  /**
+   * The phone input in the create contact form.
+   */
   readonly phoneField: Locator;
+
+  /**
+   * The street input in the create contact form.
+   */
   readonly streetField: Locator;
+
+  /**
+   * The city input in the create contact form.
+   */
   readonly cityField: Locator;
+
+  /**
+   * The radio input used to pick the contact's gender.
+   */
+  readonly genderRadio: Locator;
+
+  /**
+   * The save button used to submit the form.
+   */
   readonly saveButton: Locator;
+
+  /**
+   * Error text which appears when the form is submit with invalid values.
+   */
   readonly errorMessage: Locator;
 
   constructor(page: Page) {
     super(page);
 
-    this.createContactHeader = page.locator("[data-id=create-contact-header]");
-    this.nameField = page.locator("[data-id=name]");
-    this.phoneField = page.locator("[data-id=phone]");
-    this.streetField = page.locator("[data-id=street]");
-    this.cityField = page.locator("[data-id=city]");
-    this.saveButton = page.locator("[data-id=save-button]");
-    this.errorMessage = page.locator("[data-id=error-message]");
+    this.createContactHeader = page.getByTestId("create-contact-header");
+    this.nameField = page.getByTestId("name");
+    this.phoneField = page.getByTestId("phone");
+    this.streetField = page.getByTestId("street");
+    this.cityField = page.getByTestId("city");
+    this.saveButton = page.getByTestId("save-button");
+    this.errorMessage = page.getByTestId("error-message");
+    this.genderRadio = page.getByTestId("gender");
   }
 
   /**
@@ -41,7 +74,14 @@ export default class CreateContact extends BasePage {
       await UrlHelper.validateUrl(ReactAppEndpoints.CREATE_CONTACT, this.page)
     ).toBeTruthy();
 
+    // Make sure all elements exist.
     await expect(this.createContactHeader).toHaveText("Create Contact");
+    await expect(this.nameField).toHaveCount(1);
+    await expect(this.phoneField).toHaveCount(1);
+    await expect(this.streetField).toHaveCount(1);
+    await expect(this.cityField).toHaveCount(1);
+    await expect(this.genderRadio).toHaveCount(1);
+    await expect(this.saveButton).toHaveCount(1);
   }
 
   /**
@@ -53,6 +93,7 @@ export default class CreateContact extends BasePage {
     await this.phoneField.fill(contact.phone);
     await this.streetField.fill(contact.street);
     await this.cityField.fill(contact.city);
+    await this.genderRadio.selectOption(contact.gender);
 
     await this.saveButton.click();
   }

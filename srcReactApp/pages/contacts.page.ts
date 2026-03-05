@@ -2,6 +2,8 @@ import { expect, Locator, Page } from "@playwright/test";
 import BasePage from "../../sharedFiles/pages/basePage.page";
 import UrlHelper from "../../sharedFiles/utils/urlHelper.util";
 import ReactAppEndpoints from "../utils/endpoints.util";
+import Contact from "../components/contact.component";
+import { ContactModel } from "../models/contact.model";
 
 /**
  * Represents the contacts list page of the application.
@@ -19,7 +21,7 @@ export default class Contacts extends BasePage {
   /**
    * The list of contact cards showing on the screens.
    */
-  readonly contacts: Locator;
+  readonly contactsCard: Locator;
 
   /**
    * A button which leads to the create contact form.
@@ -34,47 +36,69 @@ export default class Contacts extends BasePage {
   constructor(page: Page) {
     super(page);
 
-    this.searchInput = page.locator("[data-id=search]");
-    this.contacts = page.locator("[data-id=contact]");
-    this.createButton = page.locator("[data-id=add-button]");
-    this.contactsPageHeader = page.locator("[data-id=contacts]");
+    this.searchInput = page.getByTestId("search");
+    this.contactsCard = page.getByTestId("contact");
+    this.createButton = page.getByTestId("add-button");
+    this.contactsPageHeader = page.getByTestId("contacts");
   }
 
   /**
    * Search for a certain phrase. Validate that a valid result is found.
    * @param search the phrase to execute the search with.
-   * @param [isUnique=true] expect there to be only one exact match.
+   * @param expectedResults how many results do I expect to find.
    */
-  async searchExists(search: string, isUnique: boolean = true): Promise<void> {
+  async search(search: string, expectedResults: number): Promise<void> {
     // Fill search bar.
+    await expect(this.searchInput).toHaveValue("");
     await this.searchInput.fill(search);
 
     // Assert expected result.
-    await expect(this.contacts).toContainText(search);
+    await expect(this.contactsCard).toHaveCount(expectedResults);
 
-    if (isUnique) {
-      await expect(this.contacts).toHaveCount(1);
+    if (expectedResults > 0) {
+      await expect(this.contactsCard).toContainText(search);
     }
   }
 
   /**
-   * Search for a certain phrase. Validate that no result is found
-   * @param search the phrase to execute the search with.
+   * Check that a contact with the full contact details exists on the page.
+   * @param expectedContact the contact we want to find on the page.
    */
-  async searchNotExists(search: string): Promise<void> {
-    // Fill search bar.
-    await this.searchInput.fill(search);
-    // Expect no results.
-    await expect(this.contacts).toHaveCount(0);
+  async validateContactDetails(expectedContact: ContactModel): Promise<void> {
+    const contactsList = await this.createContactsComponents();
+
+    const result = await Promise.all(
+      contactsList.map(async (contactInList) => {
+        return (
+          (await contactInList.name.textContent()) === expectedContact.name &&
+          (await contactInList.address.textContent())?.includes(
+            expectedContact.street
+          ) &&
+          (await contactInList.address.textContent())?.includes(
+            expectedContact.city
+          ) &&
+          (await contactInList.gender.textContent()) === expectedContact.gender
+        );
+      })
+    );
+
+    expect(result.some(Boolean)).toBeTruthy();
   }
 
   /**
-   * Check that the create button exists and click it.
+   * Delete the nth contact in the contacts list.
+   * Validate that it has been deleted successfully.
    */
-  async clickCreate(): Promise<void> {
-    await expect(this.createButton).toHaveCount(1);
+  async deleteNthContact(contactNumber: number): Promise<void> {
+    const amountOfContacts = await this.contactsCard.count();
 
-    await this.createButton.click();
+    // Validate that the contact to be deleted exists.
+    expect(amountOfContacts).toBeGreaterThanOrEqual(contactNumber);
+
+    const contactToDelete = new Contact(this.contactsCard.nth(contactNumber));
+    await contactToDelete.deleteButton.click();
+
+    await expect(this.contactsCard).toHaveCount(amountOfContacts - 1);
   }
 
   /**
@@ -85,6 +109,25 @@ export default class Contacts extends BasePage {
       await UrlHelper.validateUrl(ReactAppEndpoints.CONTACTS, this.page)
     ).toBeTruthy();
 
+    // Validate that the components exist on the screen.
     await expect(this.contactsPageHeader).toHaveText("Contacts");
+    await expect(this.searchInput).toHaveCount(1);
+    await expect(this.createButton).toHaveCount(1);
+  }
+
+  /**
+   * Create contact components according the list which currently appears.
+   * Used to access inner contact elements.
+   * @returns a list of contact components according to what appears at this moment in the contacts list.
+   */
+  private async createContactsComponents(): Promise<Contact[]> {
+    const contactsCount = await this.contactsCard.count();
+    const contacts: Contact[] = [];
+
+    for (let nthContact = 0; nthContact < contactsCount; nthContact++) {
+      contacts.push(new Contact(this.contactsCard.nth(nthContact)));
+    }
+
+    return contacts;
   }
 }

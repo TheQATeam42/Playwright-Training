@@ -17,7 +17,7 @@ export default defineConfig({
     launchOptions: {
       args: ["--start-maximized"],
     },
-    testIdAttribute: "data-test",
+    testIdAttribute: "data-id",
     browserName: "chromium",
     headless: BrowserConfig.headless,
     viewport: null,

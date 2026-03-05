@@ -1,18 +1,10 @@
-import { expect } from "playwright/test";
-import ReactAppEndpoints from "../utils/endpoints.util";
 import reactAppTest from "./setup/testLevelHooks.setup";
-import Contact from "../components/contact.component";
 
 /**
  * All tests related to the contacts list page.
  */
 
 const contactsListTest = reactAppTest.extend({});
-
-contactsListTest.beforeEach(async ({ contacts, page }) => {
-  await page.goto(ReactAppEndpoints.CONTACTS);
-  contacts().acceptAlerts();
-});
 
 /**
  * Search for a contact in the contacts list,
@@ -24,22 +16,24 @@ contactsListTest(
     // The name of the contact to delete.
     const name = "Alika Medina";
 
+    // Accept any alerts that appear.
+    contacts().acceptAlerts();
+
     // Search for the contact.
-    await contacts().searchExists(name);
+    await contacts().search(name, 1);
 
     // Delete the contact.
-    const contact = new Contact(contacts().contacts);
-    await contact.delete();
+    await contacts().deleteNthContact(0);
 
-    let a = await contacts().contacts.count();
-    // Validate that the contact has been deleted and the search shows no new results.
-    expect(contacts().contacts).toHaveCount(0);
+    // Validate that the contact has been deleted and the search shows no results.
+    await contacts().searchInput.fill("");
+    await contacts().search(name, 0);
 
     // Refresh the page.
     page.reload();
 
     // After the refresh, the page should be reinitialized.
     // Search for the contact again and validate that it exists.
-    await contacts().searchExists(name);
+    await contacts().search(name, 1);
   }
 );
