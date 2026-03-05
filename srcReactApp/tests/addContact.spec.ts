@@ -55,9 +55,46 @@ addContactListTest("Add Contact", async ({ page }): Promise<void> => {
 });
 
 const addContactsInvalidInput = reactAppTest.extend({});
-
 addContactsInvalidInput(
   "Add Contact with invalid input",
+  async ({ page }): Promise<void> => {
+    // Checking if the create button exists
+    const createContactBtn = page.locator('button[data-id="add-button"]');
+    await expect(createContactBtn).toBeVisible();
+
+    // Click button
+    await createContactBtn.click();
+    let saveBtn = page.locator('button[data-id="save-button"]');
+    let errorLabel = page.locator('[data-id="error-message"]');
+    const allFields = [
+      { id: "name", value: "Human Name" },
+      { id: "phone", value: "0000" },
+      { id: "street", value: "Street st" },
+      { id: "city", value: "City here" },
+    ];
+
+    for (const skipField of allFields) {
+      for (const fieldToFill of allFields) {
+        if (fieldToFill.id !== skipField.id) {
+          await page
+            .locator(`[data-id="${fieldToFill.id}"]`)
+            .fill(fieldToFill.value);
+        }
+        //  else {
+        //   await page.locator(`[data-id="${fieldToFill.id}"]`).fill("");
+        // }
+      }
+      saveBtn.click();
+      await expect(errorLabel).toBeVisible();
+      await page.reload();
+    }
+  }
+);
+
+const addContactsInvalidPhoneInput = reactAppTest.extend({});
+
+addContactsInvalidPhoneInput(
+  "Add Contact with invalid phone input",
   async ({ page }): Promise<void> => {
     const createContactBtn = page.locator('button[data-id="add-button"]');
     // Click button
