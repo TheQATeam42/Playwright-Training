@@ -53,3 +53,23 @@ addContactListTest("Add Contact", async ({ page }): Promise<void> => {
   searchBar.fill(personName);
   await expect(contactItems).toHaveCount(0);
 });
+
+const addContactsInvalidInput = reactAppTest.extend({});
+
+addContactsInvalidInput(
+  "Add Contact with invalid input",
+  async ({ page }): Promise<void> => {
+    const createContactBtn = page.locator('button[data-id="add-button"]');
+    // Click button
+    await createContactBtn.click();
+    let phoneLabel = page.locator('[data-id="phone"]');
+
+    // Valid input
+    await phoneLabel.fill("123456789");
+    await expect(phoneLabel).toHaveValue("123456789");
+
+    // Invalid Input
+    await phoneLabel.fill("1234567890");
+    await expect(phoneLabel).toHaveValue("123456789");
+  }
+);
