@@ -13,6 +13,22 @@ export default class Contacts extends BasePage {
     super(page);
   }
 
+  async getElementByDataId(dataID: string, params: object = {}) {
+    const element = this.page.locator(`[data-id="${dataID}"]`, params);
+    console.log(element)
+    console.log(await element.count())
+
+    return element;
+  }
+
+  async reload() {
+    await this.page.reload();
+  }
+
+  async checkURL(URL: String) {
+    return this.page.url() === URL;
+  }
+
   async deleteContact(name: string) {
     const contactRow = this.page.locator('[data-id="contact"]', {
       hasText: name,
@@ -25,13 +41,21 @@ export default class Contacts extends BasePage {
     await contactRow.locator('[data-id="delete-button"]').click();
   }
 
-  async getElementByDataId(dataID: string, params: object = {}) {
-    const element = await this.page.locator(`[data-id="${dataID}"]`, params);
+  async createContact(
+    Name: string,
+    Gender: string,
+    Phone: string,
+    Street: string,
+    City: string
+  ) {
+    const form = await this.getElementByDataId("contact-form");
 
-    return (await element.count()) === 0 ? null : element;
-  }
+    await form?.locator('[data-id="name"]').fill(Name);
+    await form?.locator('[data-id="gender"]').selectOption(Gender);
+    await form?.locator('[data-id="phone"]').fill(Phone);
+    await form?.locator('[data-id="street"]').fill(Street);
+    await form?.locator('[data-id="city"]').fill(City);
 
-  async reload() {
-    await this.page.reload();
+    await form?.locator('[data-id="save-button"]').click();
   }
 }
