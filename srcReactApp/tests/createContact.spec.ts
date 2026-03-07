@@ -3,8 +3,11 @@ import reactAppTest from "./setup/testLevelHooks.setup";
 
 const contactsListTest = reactAppTest.extend({});
 
-// Create Contact Scenario
-contactsListTest("create contact", async ({ contacts }): Promise<void> => {
+const contactCreateURL = "https://hub.testingtalks.com.au/tasks/create"
+const contactsListURL = "https://hub.testingtalks.com.au"
+
+// Create Valid Contact Scenario
+contactsListTest("create valid contact", async ({ contacts }): Promise<void> => {
   const contactName = "Shir Zohar";
   const contactsPage = contacts();
 
@@ -16,7 +19,7 @@ contactsListTest("create contact", async ({ contacts }): Promise<void> => {
   createButton?.click();
 
   // checks if the URL changed to contact form URL
-  let isCorrectURL = await contactsPage.checkURL("https://hub.testingtalks.com.au/tasks/create");
+  let isCorrectURL = await contactsPage.checkURL(contactCreateURL);
   expect(isCorrectURL).toBeTruthy;
 
   // checks page header exist and has the correct text
@@ -28,7 +31,7 @@ contactsListTest("create contact", async ({ contacts }): Promise<void> => {
   await contactsPage.createContact(contactName, "Other", "0509161133", "QA", "PituahTochna");
 
   // checks if URL changed to contact list URL
-  isCorrectURL = await contactsPage.checkURL("https://hub.testingtalks.com.au");
+  isCorrectURL = await contactsPage.checkURL(contactsListURL);
   expect(isCorrectURL).toBeTruthy;
 
   // checks page header exist and has the correct text
@@ -54,4 +57,38 @@ contactsListTest("create contact", async ({ contacts }): Promise<void> => {
   // checks if the contact is not there any more
   newContact = await contactsPage.getElementByDataId("contact", { hasText: contactName });
   expect(newContact).toHaveCount(0)
+});
+
+
+// Create Invalid Contact Scenario
+contactsListTest("create invalid contact", async ({ contacts }): Promise<void> => {
+  const invalidInput = "00000000000000000000";
+  const contactsPage = contacts();
+
+  // checks for create button existence
+  const createButton = await contactsPage.getElementByDataId("add-button");
+  await expect(createButton).toHaveCount(1)
+
+  // clicks button to open contact form
+  createButton?.click();
+
+  // checks if the URL changed to contact form URL
+  let isCorrectURL = await contactsPage.checkURL(contactCreateURL);
+  expect(isCorrectURL).toBeTruthy;
+
+  // checks page header exist and has the correct text
+  let pageHeader = await contactsPage.getElementByDataId("create-contact-header");
+  await expect(pageHeader).toHaveCount(1)
+  await expect(pageHeader!).toHaveText("Create Contact");
+
+  // create contact by params
+  await contactsPage.createContact(invalidInput, "Other", invalidInput, invalidInput, invalidInput);
+
+  // checks if error appeared
+  let errorMsg = await contactsPage.getElementByDataId("error-message");
+  await expect(errorMsg).toHaveCount(1)
+
+  // checks if the URL stayed as create form URL
+  isCorrectURL = await contactsPage.checkURL(contactCreateURL);
+  expect(isCorrectURL).toBeTruthy;
 });
