@@ -1,35 +1,30 @@
 import { expect, Locator } from "playwright/test";
 import reactAppTest from "./setup/testLevelHooks.setup";
-import {
-  clearSearchBar,
-  getAllContactsLocator,
-  getSearchBarLocator,
-  getSpecificContactLocatorFromAllContacts,
-} from "../utils/helpers/contactsHelpers.util";
 import { setupOnDialog } from "../utils/helpers/dialogHelpers.util";
-import { NAME_OF_USER_TO_DELETE } from "../Global Variables/testVariables";
+import { testConfigs } from "../utils/parseJson.util";
+import Contact from "../types/Types/Contact";
+import ContactsPage from "../POMs/ContactsPage";
 
 const contactsListTest = reactAppTest.extend({});
 
 contactsListTest("Contact Deletion Test", async ({ page }): Promise<void> => {
+  const contactsPage = new ContactsPage(page);
+
   // Step 1
-  const searchBarLocator: Locator = getSearchBarLocator(page);
-  await expect(searchBarLocator).toBeVisible();
+  await expect(contactsPage.searchbar).toBeVisible();
 
   // Step 2
-  await searchBarLocator.fill(NAME_OF_USER_TO_DELETE);
-  const allContacts: Locator = getAllContactsLocator(page);
+  const contactToDelete: Contact = testConfigs.contacts.ToDelete;
+  await contactsPage.searchContact(contactToDelete.name);
 
   // Step 3
-  const specificContactLocator: Locator =
-    getSpecificContactLocatorFromAllContacts(
-      allContacts,
-      NAME_OF_USER_TO_DELETE
-    );
+  const specificContactLocator: Locator = contactsPage.getSpecificContact(
+    contactToDelete.name
+  );
   await expect(specificContactLocator).toBeVisible();
 
   // Step 4
-  await expect(allContacts).toHaveCount(1);
+  await expect(contactsPage.allContactItems).toHaveCount(1);
 
   // Step 5 & 6
   const deleteButton: Locator = specificContactLocator.getByRole("button", {
@@ -39,7 +34,7 @@ contactsListTest("Contact Deletion Test", async ({ page }): Promise<void> => {
   await deleteButton.click();
 
   // Step 7
-  await clearSearchBar(searchBarLocator);
+  await contactsPage.clearSearchBar();
   await expect(specificContactLocator).toHaveCount(0);
 
   // Step 8

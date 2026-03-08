@@ -1,0 +1,22 @@
+{
+  "Contacts": {
+    "ToDelete": {
+      "name": "Alika Medina",
+      "gender": "Female",
+      "address": "6840 Semper Rd., Makurdi"
+    },
+    "ToCreate": {
+      "name": "Monkey D. Luffy",
+      "gender": "Male",
+      "phone": "123456789",
+      "address": {
+        "city": "England",
+        "street": "HaNeshamot HaTehorot"
+      }
+    }
+  },
+  "Titles": {
+    "Contacts": "Contacts",
+    "CreateContact": "Create Contact"
+  }
+}
