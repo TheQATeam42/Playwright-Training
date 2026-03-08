@@ -1,4 +1,4 @@
-import { Page } from "playwright";
+import { FrameLocator, Page } from "playwright";
 
 /**
  * Abstract base class that serves as the parent class for all page objects.

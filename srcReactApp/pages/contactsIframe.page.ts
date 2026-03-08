@@ -8,29 +8,13 @@ import BasePage from "../../sharedFiles/pages/basePage.page";
  * @extends BasePage
  * @param {Page} page - The Playwright Page object representing the current page.
  */
-export default class Contacts extends BasePage {
-  readonly searchBar: Locator;
-  readonly contactItems: Locator;
+export default class ContactsIFrame {
+  readonly page: FrameLocator;
   readonly addContactButton: Locator;
-  readonly openPlaygroundButton: Locator;
 
-  constructor(page: Page) {
-    super(page);
-    this.searchBar = this.page.locator('input[data-id="search"]');
-    this.contactItems = this.page.locator('div[data-id="contact"]');
+  constructor(page: FrameLocator) {
+    this.page = page;
     this.addContactButton = this.page.locator('button[data-id="add-button"]');
-    this.openPlaygroundButton = this.page.locator(
-      '[data-id="playground-button"]'
-    );
-  }
-
-  async search(searchStr: string) {
-    await expect(this.searchBar).toBeVisible();
-    this.searchBar.fill(searchStr);
-  }
-
-  get getContactItems(): Locator {
-    return this.contactItems;
   }
 
   async openAddContactPage() {
@@ -41,14 +25,22 @@ export default class Contacts extends BasePage {
   async verifyContactsPage() {
     // Ensuring we returned to the main contact page
     let baseUrl = process.env.REACT_BASE_URL;
-    await expect(this.page).toHaveURL(baseUrl!);
+    // await expect(this.page).toHaveProperty(baseUrl!);
+    const frame = this.page.owner();
+    const currentUrl = await frame.evaluate(() => window.location.pathname);
+    await expect(currentUrl).toContain(baseUrl!);
 
     // Checking the title of this page is correct.
     const contactsPageTitle = this.page.locator('[data-id="contacts"]');
     await expect(contactsPageTitle).toContainText("Contacts");
   }
 
-  async openPlaygroundPage() {
-    await this.openPlaygroundButton.click();
+  async verifyAddContactsPage() {
+    // Ensuring we returned to the main contact page
+    let baseUrl = process.env.REACT_BASE_URL;
+    // await expect(this.page).toHaveProperty(baseUrl!);
+    const frame = this.page.owner();
+    const currentUrl = await frame.evaluate(() => window.location.pathname);
+    await expect(currentUrl).toContain(baseUrl + "tasks/create");
   }
 }
