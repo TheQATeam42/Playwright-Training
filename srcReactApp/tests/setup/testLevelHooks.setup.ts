@@ -1,5 +1,5 @@
 import UrlHelper from "../../../sharedFiles/utils/urlHelper.util";
-import baseTest from "./initPages.setup";
+import baseTest from "../../fixtures/reactAppFixtures";
 
 /**
  * Extended test fixture for the application tests.
