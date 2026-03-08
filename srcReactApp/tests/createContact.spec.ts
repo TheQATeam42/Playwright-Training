@@ -7,7 +7,7 @@ const contactCreateURL = "https://hub.testingtalks.com.au/tasks/create"
 const contactsListURL = "https://hub.testingtalks.com.au"
 
 // Create Valid Contact Scenario
-contactsListTest("create valid contact", async ({ contacts }): Promise<void> => {
+contactsListTest("Create Valid Contact", async ({ contacts }): Promise<void> => {
   const contactName = "Shir Zohar";
   const contactsPage = contacts();
 
@@ -61,7 +61,7 @@ contactsListTest("create valid contact", async ({ contacts }): Promise<void> => 
 
 
 // Create Invalid Contact Scenario
-contactsListTest("create invalid contact", async ({ contacts }): Promise<void> => {
+contactsListTest("Create Invalid Contact", async ({ contacts }): Promise<void> => {
   const invalidInput = "00000000000000000000";
   const contactsPage = contacts();
 

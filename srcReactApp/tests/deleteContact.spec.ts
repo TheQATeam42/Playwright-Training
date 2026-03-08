@@ -4,7 +4,7 @@ import reactAppTest from "./setup/testLevelHooks.setup";
 const contactsListTest = reactAppTest.extend({});
 
 // Delete Contact Scenario
-contactsListTest("delete contact", async ({ contacts }): Promise<void> => {
+contactsListTest("Delete Contact", async ({ contacts }): Promise<void> => {
   const contactName = "Abraham Perry";
   const contactsPage = contacts();
 

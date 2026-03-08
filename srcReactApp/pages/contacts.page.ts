@@ -15,8 +15,6 @@ export default class Contacts extends BasePage {
 
   async getElementByDataId(dataID: string, params: object = {}) {
     const element = this.page.locator(`[data-id="${dataID}"]`, params);
-    console.log(element)
-    console.log(await element.count())
 
     return element;
   }
