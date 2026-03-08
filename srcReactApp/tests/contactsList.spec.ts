@@ -1,19 +1,25 @@
 import { DialogUtils } from "../../sharedFiles/utils/dialog.util";
 import reactAppTest from "./setup/testLevelHooks.setup";
+import { TestType } from "../../sharedFiles/utils/testTypes.util";
+import ReactAppEndpoints from "../utils/endpoints.util";
 
 /**
  * All tests related to the contacts list page.
  */
-
 const contactsListTest = reactAppTest.extend({});
 
 contactsListTest.describe("Contacts List Tests", { tag: "@contacts" }, () => {
+  contactsListTest.beforeEach(
+    async ({ page }) => await page.goto(ReactAppEndpoints.CONTACTS)
+  );
+
   /**
    * Search for a contact in the contacts list,
    * delete that contact, and validate that it reappears on refresh.
    */
   contactsListTest(
     "Search for a contact and then delete it",
+    { tag: TestType.Sanity },
     async ({ contacts, page }): Promise<void> => {
       // The name of the contact to delete.
       const name = "Alika Medina";

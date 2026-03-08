@@ -1,4 +1,4 @@
-enum TestType {
+export enum TestType {
   Regression = "@Regression",
   Smoke = "@Smoke",
   Sanity = "@Sanity",

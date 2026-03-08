@@ -2,6 +2,7 @@ import { test } from "@playwright/test";
 import lazyFixture from "../../sharedFiles/utils/lazyFixture.util";
 import Contacts from "../pages/contacts.page";
 import CreateContact from "../pages/createContact.page";
+import Playground from "../pages/playground.page";
 
 /**
  * Represents a collection of page objects for the application.
@@ -11,6 +12,7 @@ import CreateContact from "../pages/createContact.page";
 type Pages = {
   contacts: () => Contacts;
   createContactForm: () => CreateContact;
+  playground: () => Playground;
 };
 
 /**
@@ -27,6 +29,7 @@ type Pages = {
 const baseTest = test.extend<Pages>({
   contacts: lazyFixture(Contacts),
   createContactForm: lazyFixture(CreateContact),
+  playground: lazyFixture(Playground),
 });
 
 export default baseTest;

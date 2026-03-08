@@ -48,6 +48,7 @@ export default class Contacts extends BasePage {
    * @param expectedResults how many results do I expect to find.
    */
   async search(search: string, expectedResults: number): Promise<void> {
+    await this.searchInput.fill("");
     // Fill search bar.
     await expect(this.searchInput).toHaveValue("");
     await this.searchInput.fill(search);
