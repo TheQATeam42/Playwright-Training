@@ -3,7 +3,7 @@
  * @enum {string}
  */
 enum ReactAppEndpoints {
-  // TODO: Add here all the system endpoints
+  CreateContactForm = "@/tasks/create",
 }
 
 export default ReactAppEndpoints;

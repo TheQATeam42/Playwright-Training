@@ -1,32 +1,17 @@
-import { Locator, Page } from "playwright/test";
+import { expect, Locator } from "playwright/test";
+import Contact from "../../types/Types/Contact";
 
-export const getSearchBarLocator = (page: Page): Locator => {
-  return page.getByTestId("search");
-};
-
-export const clearSearchBar = async (
-  searchBarLocator: Locator
+export const expectContactToBe = async (
+  contactLocator: Locator,
+  expectedContact: Contact
 ): Promise<void> => {
-  await searchBarLocator.fill("");
-};
-
-export const getAllContactsLocator = (page: Page): Locator => {
-  return page.getByTestId("contact");
-};
-
-export const getSpecificContactLocatorFromAllContacts = (
-  allContactsLocator: Locator,
-  nameOfUser: string
-): Locator => {
-  return allContactsLocator.filter({
-    hasText: nameOfUser,
-  });
-};
-
-export const getSpecificContactLocator = (
-  page: Page,
-  nameOfUser: string
-): Locator => {
-  const allContacts: Locator = getAllContactsLocator(page);
-  return getSpecificContactLocatorFromAllContacts(allContacts, nameOfUser);
+  await expect(contactLocator.getByTestId("name")).toHaveText(
+    expectedContact.name
+  );
+  await expect(contactLocator.getByTestId("gender")).toHaveText(
+    expectedContact.gender
+  );
+  await expect(contactLocator.getByTestId("address")).toHaveText(
+    expectedContact.address.ToString()
+  );
 };
