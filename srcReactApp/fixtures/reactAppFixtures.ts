@@ -1,6 +1,7 @@
 import { test } from "@playwright/test";
 import lazyFixture from "../../sharedFiles/utils/lazyFixture.util";
-import Contacts from "../pages/contacts.page";
+import ContactListPage from "../pages/contactList.page";
+import ContactFormPage from "../pages/contactForm.page";
 
 /**
  * Represents a collection of page objects for the application.
@@ -8,7 +9,8 @@ import Contacts from "../pages/contacts.page";
  * @typedef {Object} Pages
  */
 type Pages = {
-  contacts: () => Contacts;
+  contactList: () => ContactListPage;
+  contactForm: () => ContactFormPage;
 };
 
 /**
@@ -23,7 +25,8 @@ type Pages = {
  * @type {Pages}
  */
 const baseTest = test.extend<Pages>({
-  contacts: lazyFixture(Contacts),
+  contactList: lazyFixture(ContactListPage),
+  contactForm: lazyFixture(ContactFormPage),
 });
 
 export default baseTest;
