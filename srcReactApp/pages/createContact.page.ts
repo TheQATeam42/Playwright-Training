@@ -15,6 +15,8 @@ export default class CreateContact extends BasePage {
   public readonly streetInput: Locator;
   public readonly cityInput: Locator;
   public readonly saveButton: Locator;
+  public readonly cancelButton: Locator;
+  public readonly errorMessage: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -25,6 +27,8 @@ export default class CreateContact extends BasePage {
     this.streetInput = page.locator('[data-id="street"]');
     this.cityInput = page.locator('[data-id="city"]');
     this.saveButton = page.locator('[data-id="save-button"]');
+    this.cancelButton = page.locator('[data-id="cancel-button"]');
+    this.errorMessage = page.locator('[data-id="error-message"]');
   }
 
   /**
