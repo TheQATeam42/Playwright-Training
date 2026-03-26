@@ -9,16 +9,16 @@ contactsListTest(
     const contactsPage = contacts();
     const contactToDelete = "Abraham Perry";
 
-    await expect(contactsPage.searchBar).toBeVisible();
-    await contactsPage.searchContact(contactToDelete);
+    await contactsPage.searchBar.fill(contactToDelete);
     await expect(contactsPage.contactCards).toHaveCount(1);
-    await expect(page.locator('[data-id="name"]')).toHaveText(contactToDelete);
+    await expect(contactsPage.contact.nameLabel.first()).toHaveText(contactToDelete);
     page.once("dialog", (dialog) => dialog.accept());
     await contactsPage.contact.deleteContactByName(contactToDelete);
     await expect(contactsPage.contactCards).toHaveCount(0);
+    await expect(contactsPage.emptySearchMessage).toBeVisible();
     await page.reload();
-    await contactsPage.searchContact(contactToDelete);
+    await contactsPage.searchBar.fill(contactToDelete);
     await expect(contactsPage.contactCards).toHaveCount(1);
-    await expect(page.locator('[data-id="name"]')).toHaveText(contactToDelete);
+    await expect(contactsPage.contact.nameLabel.first()).toHaveText(contactToDelete);
   }
 );

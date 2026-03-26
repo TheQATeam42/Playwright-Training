@@ -1,12 +1,7 @@
 import { Page, Locator } from "@playwright/test";
 import BasePage from "../../sharedFiles/pages/basePage.page";
+import { IContact } from "../models/contact.model";
 
-/**
- * Represents the Create Contact form page.
- * Provides methods to interact with the form fields and submit.
- *
- * @extends BasePage
- */
 export default class CreateContact extends BasePage {
   readonly pageTitle: Locator;
   readonly nameInput: Locator;
@@ -16,30 +11,22 @@ export default class CreateContact extends BasePage {
   readonly cityInput: Locator;
   readonly saveButton: Locator;
   readonly cancelButton: Locator;
+  readonly errorMessage: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.pageTitle    = page.locator('[data-id="create-contact-header"]');
-    this.nameInput    = page.locator('[data-id="name"]');
+    this.pageTitle = page.locator('[data-id="create-contact-header"]');
+    this.nameInput = page.locator('[data-id="name"]');
     this.genderSelect = page.locator('[data-id="gender"]');
-    this.phoneInput   = page.locator('[data-id="phone"]');
-    this.streetInput  = page.locator('[data-id="street"]');
-    this.cityInput    = page.locator('[data-id="city"]');
-    this.saveButton   = page.locator('[data-id="save-button"]');
+    this.phoneInput = page.locator('[data-id="phone"]');
+    this.streetInput = page.locator('[data-id="street"]');
+    this.cityInput = page.locator('[data-id="city"]');
+    this.saveButton = page.locator('[data-id="save-button"]');
     this.cancelButton = page.locator('[data-id="cancel-button"]');
+    this.errorMessage = page.locator('[data-id="error-message"]');
   }
 
-  /**
-   * Fills in all form fields with the provided contact details.
-   * @param contact - Object containing the contact details to fill in.
-   */
-  async fillForm(contact: {
-    name: string;
-    gender?: string;
-    phone: string;
-    street: string;
-    city: string;
-  }): Promise<void> {
+  async fillForm(contact: IContact): Promise<void> {
     await this.nameInput.fill(contact.name);
     if (contact.gender) {
       await this.genderSelect.selectOption(contact.gender);
@@ -49,11 +36,15 @@ export default class CreateContact extends BasePage {
     await this.cityInput.fill(contact.city);
   }
 
-  /**
-   * Clicks the Save button to submit the form.
-   */
+  async fillFormExcept(
+    baseContact: IContact,
+    emptyField: keyof IContact
+  ): Promise<void> {
+    const data = { ...baseContact, [emptyField]: "" };
+    await this.fillForm(data);
+  }
+
   async saveContact(): Promise<void> {
     await this.saveButton.click();
   }
 }
-
