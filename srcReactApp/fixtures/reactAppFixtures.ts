@@ -5,7 +5,7 @@ import Contacts from "../pages/contacts.page";
 /**
  * Represents a collection of page objects for the application.
  *
- * @typedef {Object} Pages
+ *@typedef {Object} Pages
  */
 type Pages = {
   contacts: () => Contacts;

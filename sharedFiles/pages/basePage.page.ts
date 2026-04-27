@@ -7,7 +7,7 @@ import { Page } from "playwright";
  * a Playwright Page instance that can be used by derived classes to interact
  * with web pages.
  *
- * @abstract
+ * @abstractzzz
  * @class BasePage
  */
 export default abstract class BasePage {
