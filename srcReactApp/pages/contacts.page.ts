@@ -32,7 +32,7 @@ export default class Contacts extends BasePage {
     return (await this.getContactByIndex(index).getByTestId("name").textContent()) ?? "";
   }
   issearchResultEmpty(): Promise<boolean> {
-    return this.page.getByTestId("no-search-result").isVisible();
+    return this.page.getByTestId("no-items-message").isVisible();
   }
   async searchContacts(query: string): Promise<void> {
     const searchInput = this.page.getByTestId("search");

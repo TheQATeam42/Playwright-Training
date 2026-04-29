@@ -20,7 +20,7 @@ export default class NewContact extends BasePage {
     this.cityInput          = page.getByTestId("city");
     this.saveButton         = page.getByTestId("save-button");
     this.genderInput        = page.getByTestId("gender");
-    this.errormassge        = page.getByTestId("no-items-message");
+    this.errormassge        = page.getByTestId("error-message");
   }
 
   async getErrorMessageText(): Promise<string> {
