@@ -20,9 +20,6 @@ export default class Contact extends BaseComponent {
   get deleteButton(): Locator {
     return this.root.getByTestId("delete-button");
   }
-  get createButton(): Locator {
-    return this.root.getByTestId("create-contact-button");
-  }
   get editButton(): Locator {
     return this.root.getByTestId("edit-button");
   }
@@ -32,9 +29,7 @@ export default class Contact extends BaseComponent {
   async edit(): Promise<void> {
     await this.editButton.click();
   } 
-  async create(): Promise<void> {
-    await this.createButton.click();
-  }
+
   async getName(): Promise<string> {
     return await this.name.textContent() ?? "";
   }

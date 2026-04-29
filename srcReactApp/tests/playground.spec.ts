@@ -1,4 +1,4 @@
-import { expect, Expect } from "playwright/test";
+import { expect} from "@playwright/test";
 import reactAppTest from "./setup/testLevelHooks.setup";
 import ReactAppEndpoints from "../utils/endpoints.util";
 import { Dessert } from "../../sharedFiles/modals/dessert.model";
@@ -55,14 +55,4 @@ await newcontactbutton.click();
 expect(newPage.url()).toBe("https://hub.testingtalks.com.au/tasks/create");
 await contacts().newcontactbottonclick();
 expect(await contacts().iframeCreateContactTitle.textContent()).toBe("Create Contact");
-
-
-
-
-
-
-
-
-
-
-    });
+});

@@ -10,79 +10,55 @@ import Contact from "../components/contact.component";
  * @param {Page} page - The Playwright Page object representing the current page.
  */
 export default class Contacts extends BasePage {
+  public readonly iframe: FrameLocator;
+  public readonly contactList: Locator
+  public readonly createContactButton: Locator;
+  public readonly contacts: Locator;
+  public readonly nameInput: Locator;
+  public readonly createContactTitle: Locator;
+  public readonly phoneInput: Locator;
+  public readonly streetInput: Locator;
+  public readonly cityInput: Locator;
+  public readonly saveButton: Locator;
+  public readonly genderInput: Locator;
+  public readonly errormassge: Locator;
+  public readonly palygroundbutton: Locator;
+  public readonly AutocompleteComboBoxid: Locator;
+  public readonly selectmovie: Locator;
+  public readonly swichworks: Locator;
+  public readonly swich2: Locator;
+  public readonly tableRows: Locator;
+  public readonly newwindowbutton: Locator;
+  public readonly iframeSearchInput: Locator;
+  public readonly iframeContactList: Locator;
+  public readonly iframeCreateContactTitle: Locator;
+
   constructor(page: Page) {
     super(page);
+    this.iframe = page.frameLocator("#contacts-iframe");
+    this.contactList = this.iframe.locator("#contacts-list");
+    this.createContactButton = this.iframe.getByTestId("add-button");
+    this.contacts = this.contactList.locator(".contact");
+    this.nameInput = this.iframe.getByTestId("name-input");
+    this.genderInput = this.iframe.getByTestId("gender-input"); 
+    this.phoneInput = this.iframe.getByTestId("phone-input");
+    this.streetInput = this.iframe.getByTestId("street-input");
+    this.cityInput = this.iframe.getByTestId("city-input");
+    this.saveButton = this.iframe.getByTestId("save-button");
+    this.createContactTitle = this.iframe.getByTestId("create-contact-title");
+    this.errormassge = this.iframe.getByTestId("error-message");
+    this.palygroundbutton = page.getByTestId("playground-button");
+    this.AutocompleteComboBoxid = page.getByTestId("autocomplete-combobox");
+    this.selectmovie = page.getByTestId("select-movie");
+    this.swichworks = page.getByTestId("switch-works");
+    this.swich2 = page.getByTestId("switch2");
+    this.tableRows = page.locator("#nutrition-table tbody tr");
+    this.newwindowbutton = page.getByTestId("new-window-button");
+    this.iframeSearchInput = this.iframe.getByTestId("search");
+    this.iframeContactList = this.iframe.locator("#contacts-list");
+    this.iframeCreateContactTitle = this.iframe.getByTestId("create-contact-title");
   }
-  get iframe(): FrameLocator {
-    return this.page.frameLocator("#basic-iframe");
-  }
-
-  get contactList(): Locator {
-    return this.page.locator(".ContactList");
-  }
-  get createContactButton(): Locator {
-    return this.page.getByTestId("add-button");
-  }
-
-  get contacts(): Locator {
-    return this.contactList.locator("[data-id='contact']");
-  }
-
-  get nameInput(): Locator {
-    return this.page.getByTestId("name");
-    
-  }
-  get createContactTitle(): Locator {
-  return this.page.getByTestId("create-contact-header");
-}
-get phoneInput(): Locator {
-  return this.page.getByTestId("phone");
-}
-get streetInput(): Locator {
-  return this.page.getByTestId("street");
-}
-get cityInput(): Locator {
-  return this.page.getByTestId("city");
-}
-get saveButton(): Locator {
-  return this.page.getByTestId("save-button");
-}
-get genderInput(): Locator {
-  return this.page.getByTestId("gender");
-}
-get errormassge() : Locator {
-    return this.page.getByTestId("error-message");
-}
-get palygroundbutton(): Locator {
-  return this.page.getByTestId("playground-button");
-}
-get AutocompleteComboBoxid(): Locator {
-  return this.page.locator('#movies-input');
-}
-get selectmovie() : Locator {
-  return  this.page.locator('[title="Open"]');
-}
-get swichworks() : Locator {
-  return this.page.getByTestId("switch-one");
-}
-get swich2() : Locator {
-  return this.page.getByTestId("switch-two");
-}
-get tableRows(): Locator {
-  return this.page.getByTestId("basic-table").locator("tbody tr");
-}
-get newwindowbutton(): Locator {
-  return this.page.getByTestId("open-window-button");
-}
-get iframeSearchInput(): Locator {
-  return this.iframe.getByTestId("search");
-}
-get iframeContactList(): Locator {
-  return this.iframe.locator(".ContactList");  
-}
-get iframeCreateContactTitle(): Locator {
-  return this.iframe.getByTestId("create-contact-header");  
-}
+  
 async isIframeSearchBarVisible(): Promise<boolean> {
   return this.iframeSearchInput.isVisible();
 }
