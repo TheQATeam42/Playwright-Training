@@ -6,6 +6,7 @@ enum SwagLabsEndpoints {
   INVENTORY = "/inventory.html",
   CART = "/cart.html",
   // TODO: Add here all the endpoints
+  
 }
 
 export default SwagLabsEndpoints;

@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 import BaseComponent from "../../sharedFiles/components/baseComponent.component";
 
 /**
@@ -7,9 +7,17 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
  *
  * @extends BaseComponent
  * @param {Page} page - The Playwright Page object representing the current page.
+ * @param {Locator} root - The root locator for the item container.
  */
 export default class Item extends BaseComponent {
-  constructor(page: Page) {
+  root: Locator;
+
+  constructor(page: Page , root : Locator ) {
     super(page);
+    this.root = root;
+
   }
+  
+  
+  
 }
