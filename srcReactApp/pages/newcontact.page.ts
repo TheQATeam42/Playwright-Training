@@ -9,7 +9,7 @@ export default class NewContact extends BasePage {
   public readonly cityInput: Locator;
   public readonly saveButton: Locator;
   public readonly genderInput: Locator;
-  public readonly errormassge: Locator;
+  public readonly errorMessage: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -20,20 +20,14 @@ export default class NewContact extends BasePage {
     this.cityInput          = page.getByTestId("city");
     this.saveButton         = page.getByTestId("save-button");
     this.genderInput        = page.getByTestId("gender");
-    this.errormassge        = page.getByTestId("error-message");
+    this.errorMessage       = page.getByTestId("error-message");
   }
 
-  async getErrorMessageText(): Promise<string> {
-    return (await this.errormassge.textContent()) ?? "";
-  }
   async fillContactForm(name: string, gender: string, phone: string, street: string, city: string): Promise<void> {
     await this.nameInput.fill(name);
     await this.genderInput.selectOption(gender);
     await this.phoneInput.fill(phone);
     await this.streetInput.fill(street);
     await this.cityInput.fill(city);
-  }
-  async saveContact(): Promise<void> {
-    await this.saveButton.click();
   }
 }

@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import BaseComponent from "../../sharedFiles/components/baseComponent.component";
+import Contacts from "../pages/contacts.page";
 
 /**
  * Represents a contact container within the contacts list page.
@@ -12,6 +13,7 @@ export default class Contact extends BaseComponent {
   public readonly name: Locator;
   public readonly deleteButton: Locator;
   public readonly editButton: Locator;
+
 
   constructor(page: Page , root : Locator) {
     super(page);
@@ -31,4 +33,3 @@ export default class Contact extends BaseComponent {
   }
   
 }
-

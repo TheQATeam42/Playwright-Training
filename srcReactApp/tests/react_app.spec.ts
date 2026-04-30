@@ -12,30 +12,20 @@ import reactAppTest from "./setup/testLevelHooks.setup";
  * TODO: Delete this comment when done
  */
 
-const contactsListTest = reactAppTest.extend({});
+const contactsTest = reactAppTest.extend({});
 
-contactsListTest(
+contactsTest(
   "add to contacts list, search for it, delete it and check if it is deleted",
-  async ({
-        contacts,page
-
-
-
-  }): Promise<void> => {
-    // Write here the test steps
-      expect(await contacts().issherachbarVisible()).toBeTruthy();
-      const randomName = await contacts().getRandomContactName();
-      await contacts().searchContacts(randomName);
-      expect(await contacts().issearchResultEmpty()).toBeFalsy();
-      expect(await contacts().getContactNameByIndex(0)).toBe(randomName);
-      const deleteButton = contacts().getContactComponentByIndex(0).deleteButton;
-      page.once("dialog", async (dialog) => await dialog.accept());
-      await deleteButton.click();
-      expect(await contacts().issearchResultEmpty()).toBeFalsy();
-      expect(await contacts().isContactInList(randomName)).toBeFalsy();
-      await page.reload();
-      expect(await contacts().isContactInList(randomName)).toBeTruthy();
+  async ({ contacts, page }): Promise<void> => {
+    await expect(contacts().searchBar).toBeVisible();
+    const randomName = await contacts().getRandomContactName();
+    await contacts().searchContacts(randomName);
+    await expect(contacts().noItemsMessage).not.toBeVisible();
+    await expect(contacts().getContactComponentByIndex(0).name).toHaveText(randomName);
+    await contacts().deleteContact(0);
+    await expect(contacts().noItemsMessage).toBeVisible();
+    await expect(contacts().getContactByName(randomName).first()).not.toBeVisible();
+    await page.reload();
+    await expect(contacts().getContactByName(randomName).first()).toBeVisible();
   }
 );
-
-    

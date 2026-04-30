@@ -23,21 +23,19 @@ const expectedDesserts: Dessert[] = [
 playgroundTest(
   "playground test",
   async ({ contacts, playground, page }): Promise<void> => {
-
-
-    expect(await contacts().issherachbarVisible()).toBeTruthy();
-    await contacts().clickPlaygroundButton();
+    await expect(contacts().searchBar).toBeVisible();
+    await contacts().playgroundButton.click();
     expect(page.url()).toContain(ReactAppEndpoints.playgroundend);
     const movieName = "The Godfather";
     await playground().selectMovie(movieName);
-    expect(await playground().AutocompleteComboBoxid.inputValue()).toBe(movieName);
-    await playground().clearSearch();
-    expect(await playground().AutocompleteComboBoxid.inputValue()).toBe("");
+    await expect(playground().movieInput).toHaveValue(movieName);
+    await playground().clearButton.click();
+    await expect(playground().movieInput).toHaveValue("");
     await playground().selectMovieByIndex(0);
-    expect(await playground().isswichon()).toBeTruthy();
-    await playground().clickswich();
-    expect(await playground().isswichon()).toBeFalsy();
-    expect(await playground().swich2.isDisabled()).toBeTruthy();
+    await expect(playground().switchOne).toBeChecked();
+    await playground().switchOne.click();
+    await expect(playground().switchOne).not.toBeChecked();
+    await expect(playground().switchTwo).toBeDisabled();
     const rowCount = await playground().tableRows.count();
     for (let i = 0; i < rowCount; i++) {
       const actual   = await playground().getTableRowData(i);
@@ -49,20 +47,20 @@ playgroundTest(
       expect(actual.protein).toBe(expected.protein);
     }
 
-    await playground().windowbutton();
+    await playground().newWindowButton.click();
     const [newPage] = await Promise.all([
-      page.context().waitForEvent("page"),
+      page.context().waitForEvent("page")
     ]);
     await newPage.waitForLoadState();
     expect(newPage.url()).toBe("https://hub.testingtalks.com.au/");
 
     const newWindowContacts = new Contacts(newPage);
-    expect(await newWindowContacts.issherachbarVisible()).toBeTruthy();
-    const newcontactbutton = newPage.getByTestId("add-button");
-    await newcontactbutton.click();
+    await expect(newWindowContacts.searchBar).toBeVisible();
+    const newContactButton = newPage.getByTestId("add-button");
+    await newContactButton.click();
     expect(newPage.url()).toBe("https://hub.testingtalks.com.au/tasks/create");
 
-    await playground().iframnewcontactbottonclick();
-    expect(await playground().iframeCreateContactTitle.textContent()).toBe("Create Contact");
+    await playground().iframeAddButton.click();
+    await expect(playground().iframeCreateContactTitle).toHaveText("Create Contact");
   }
 );
