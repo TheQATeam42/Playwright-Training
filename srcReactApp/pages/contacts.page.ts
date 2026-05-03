@@ -39,7 +39,7 @@ export default class Contacts extends BasePage {
   }
   async getRandomContactName(): Promise<string> {
     const count = await this.getContactCount();
-    const randomIndex = Math.floor(Math.random() * count);
+    const randomIndex = Math.floor(Math.random() * count);  
     return await this.getContactNameByIndex(randomIndex);
   }
   getContactComponentByIndex(index: number): Contact {
