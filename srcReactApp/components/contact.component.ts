@@ -1,7 +1,5 @@
 import { Locator, Page } from "@playwright/test";
 import BaseComponent from "../../sharedFiles/components/baseComponent.component";
-import Contacts from "../pages/contacts.page";
-
 /**
  * Represents a contact container within the contacts list page.
  * This class provides methods and properties to interact with a contact's elements.
