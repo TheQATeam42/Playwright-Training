@@ -49,7 +49,7 @@ module.exports = [
       // Style rules (same as .eslintrc.json)
       semi: ["error", "always"],
       quotes: ["error", "double", { avoidEscape: true }],
-      indent: ["error", 2],
+      indent: ["error", 2, { SwitchCase: 1 }],
       "require-await": "error",
       "object-curly-spacing": ["error", "always"],
     },

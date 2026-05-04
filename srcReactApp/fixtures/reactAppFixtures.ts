@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import lazyFixture from "../../sharedFiles/utils/lazyFixture.util";
 import Contacts from "../pages/contacts.page";
-import NewContact from "../pages/newcontact.page";
+import NewContact from "../pages/newcontact_CreateContact.page";
 import PlaygroundPage from "../pages/playground.page";
 
 /**
@@ -12,13 +12,13 @@ import PlaygroundPage from "../pages/playground.page";
  * playground  → the playground PAGE (movies, switches, table, new window)
  */
 type Pages = {
-  contacts:   () => Contacts;
+  contacts: () => Contacts;
   newContact: () => NewContact;
   playground: () => PlaygroundPage;
 };
 
 const baseTest = test.extend<Pages>({
-  contacts:   lazyFixture(Contacts),
+  contacts: lazyFixture(Contacts),
   newContact: lazyFixture(NewContact),
   playground: lazyFixture(PlaygroundPage),
 });
