@@ -27,13 +27,13 @@ newContactsTest(
     const randomName = "TestName" + Math.floor(Math.random() * 1000);
     await newContact().fillContactForm(newContactData.valid(randomName));
     await newContact().saveButton.click();
-
+    const numberofContact: number = 0;
     expect(page.url()).not.toContain(ReactAppEndpoints.createContact);
     await contacts().searchContacts(randomName);
     await expect(contacts().noItemsMessage).not.toBeVisible();
-    await expect(contacts().getContactComponentByIndex(0).name).toHaveText(
-      randomName
-    );
+    await expect(
+      contacts().getContactComponentByIndex(numberofContact).name
+    ).toHaveText(randomName);
 
     await page.reload();
     await contacts().searchContacts(randomName);
