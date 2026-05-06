@@ -9,7 +9,7 @@ import reactAppTest from "./setup/testLevelHooks.setup";
  *  - Verifying the contact appears in filtered results
  *  - Deleting the contact and confirming it is removed from the UI
  *  - Reloading the page to verify the deletion is NOT persisted
- *    (confirming the expected in-memory / session behaviour)
+ *    (confirming the expected in-memory / session behavior)
  *
  * Uses:
  *  contacts() → the Contacts list page fixture

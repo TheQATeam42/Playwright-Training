@@ -36,9 +36,7 @@ export default defineConfig({
     {
       name: "swag labs",
       testDir: "srcSwagLabs",
-      use: { baseURL: EnvironmentConfig.swagLabsUrl 
-      
-      },
+      use: { baseURL: EnvironmentConfig.swagLabsUrl },
     },
   ],
 });

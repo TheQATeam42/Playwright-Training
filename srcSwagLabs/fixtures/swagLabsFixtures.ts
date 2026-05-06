@@ -8,8 +8,7 @@ import lazyFixture from "../../sharedFiles/utils/lazyFixture.util";
  * @typedef {Object} Pages
  */
 type Pages = {
-  loginPage: (
-  ) => LoginPage;
+  loginPage: () => LoginPage;
 };
 
 /**

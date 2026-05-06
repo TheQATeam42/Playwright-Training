@@ -7,4 +7,3 @@ export class Dessert {
     public protein: number
   ) {}
 }
-

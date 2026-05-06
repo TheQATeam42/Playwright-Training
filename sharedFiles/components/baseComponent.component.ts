@@ -8,6 +8,4 @@ import BasePage from "../pages/basePage.page";
  * @class BaseComponent
  * @extends {BasePage}
  */
-export default abstract class BaseComponent extends BasePage {
-    
-}
+export default abstract class BaseComponent extends BasePage {}

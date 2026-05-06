@@ -21,6 +21,6 @@ const loginTest = swagLabsTest.extend({});
 loginTest(
   "Write here the name of the test",
   async ({ loginPage }): Promise<void> => {
-    loginPage().usernameInput.fill(Users.standardUser);
+    await loginPage().usernameInput.fill(Users.standardUser);
   }
 );

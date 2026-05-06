@@ -12,12 +12,8 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
 export default class Item extends BaseComponent {
   root: Locator;
 
-  constructor(page: Page , root : Locator ) {
+  constructor(page: Page, root: Locator) {
     super(page);
     this.root = root;
-
   }
-  
-  
-  
 }
