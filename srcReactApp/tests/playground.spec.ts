@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import reactAppTest from "./setup/testLevelHooks.setup";
 import ReactAppEndpoints from "../utils/endpoints.util";
-import { Dessert } from "../../sharedFiles/modals/dessert.model";
+import { Dessert } from "../modals/dessert.model";
 import Contacts from "../pages/contacts.page";
 
 /**
@@ -17,6 +17,9 @@ import Contacts from "../pages/contacts.page";
  *  playground() → interact with playground elements via components
  */
 const playgroundTest = reactAppTest.extend({});
+
+/** Index of the first option in the movie autocomplete dropdown. */
+const FIRST_MOVIE_INDEX = 0;
 
 const expectedDesserts: Dessert[] = [
   new Dessert("Frozen yoghurt", 159, 6, 24, 4),
@@ -41,10 +44,11 @@ playgroundTest(
       await expect(playground().movieAutocomplete.movieInput).toHaveValue(
         movieName
       );
-      const firsIndex: number = 0;
       await playground().movieAutocomplete.clearButton.click();
       await expect(playground().movieAutocomplete.movieInput).toHaveValue("");
-      await playground().movieAutocomplete.selectMovieByIndex(firsIndex);
+      await playground().movieAutocomplete.selectMovieByIndex(
+        FIRST_MOVIE_INDEX
+      );
     });
 
     await playgroundTest.step("Switch group", async () => {

@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import BasePage from "../../sharedFiles/pages/basePage.page";
-import { ContactData } from "../../sharedFiles/modals/contact.model";
+import { ContactData } from "../modals/contact.model";
 
 /**
  * Page object for the Create Contact form page.
@@ -10,7 +10,7 @@ import { ContactData } from "../../sharedFiles/modals/contact.model";
  *
  * @extends BasePage
  */
-export default class NewContact extends BasePage {
+export default class ContactForm extends BasePage {
   /** Input field for the contact's full name */
   public readonly nameInput: Locator;
   /** Heading that confirms the Create Contact page is loaded */

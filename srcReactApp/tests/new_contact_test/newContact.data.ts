@@ -1,4 +1,4 @@
-import { ContactData, Gender } from "../../sharedFiles/modals/contact.model";
+import { ContactData, Gender } from "../../modals/contact.model";
 
 /**
  * Shared base fields used by all phone-validation tests.

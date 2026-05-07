@@ -11,8 +11,6 @@ import Contact from "../components/contact.component";
  * @extends BasePage
  */
 export default class Contacts extends BasePage {
-  /** The full contact list container */
-  public readonly contactList: Locator;
   /** Button that navigates to the Create Contact form */
   public readonly createContactButton: Locator;
   /** All individual contact row elements inside the list */
@@ -24,8 +22,9 @@ export default class Contacts extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.contactList = page.locator(".ContactList");
-    this.contacts = this.contactList.locator("[data-id='contact']");
+    this.contacts = this.page
+      .locator(".ContactList")
+      .locator("[data-id='contact']");
     this.createContactButton = page.getByTestId("add-button");
     this.searchBar = page.getByTestId("search");
     this.noItemsMessage = page.getByTestId("no-items-message");

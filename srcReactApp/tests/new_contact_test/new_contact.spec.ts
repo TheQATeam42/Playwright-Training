@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
-import reactAppTest from "./setup/testLevelHooks.setup";
-import ReactAppEndpoints from "../utils/endpoints.util";
+import reactAppTest from "../setup/testLevelHooks.setup";
+import ReactAppEndpoints from "../../utils/endpoints.util";
 import {
   newContactData,
   invalidPhoneTestCases,
@@ -17,28 +17,42 @@ const newContactsTest = reactAppTest.extend({});
 
 const phoneError = 'Error: The "phone" field should be a valid phone number.';
 
+/** Upper bound (exclusive) for the random numeric suffix appended to test contact names. */
+const RANDOM_SUFFIX_MAX = 1000;
+/** Index of the first contact row in the contacts list. */
+const FIRST_CONTACT_INDEX = 0;
+
+/**
+ * Navigate to the Create Contact form before every test so each
+ * test body can focus solely on its own actions, not on navigation.
+ */
+newContactsTest.beforeEach(async ({ contacts, newContact, page }) => {
+  await contacts().createContactButton.click();
+  expect(page.url()).toContain(ReactAppEndpoints.createContact);
+  await expect(newContact().createContactTitle).toHaveText("Create Contact");
+});
+
 newContactsTest(
   "add to contacts list, search for it, delete it and check if it is deleted",
   async ({ contacts, newContact, page }): Promise<void> => {
-    await contacts().createContactButton.click();
-    expect(page.url()).toContain(ReactAppEndpoints.createContact);
-    await expect(newContact().createContactTitle).toHaveText("Create Contact");
+    const testContact = {
+      name: "TestName" + Math.floor(Math.random() * RANDOM_SUFFIX_MAX),
+    };
 
-    const randomName = "TestName" + Math.floor(Math.random() * 1000);
-    await newContact().fillContactForm(newContactData.valid(randomName));
+    await newContact().fillContactForm(newContactData.valid(testContact.name));
     await newContact().saveButton.click();
-    const numberofContact: number = 0;
+
     expect(page.url()).not.toContain(ReactAppEndpoints.createContact);
-    await contacts().searchContacts(randomName);
+    await contacts().searchContacts(testContact.name);
     await expect(contacts().noItemsMessage).not.toBeVisible();
     await expect(
-      contacts().getContactComponentByIndex(numberofContact).name
-    ).toHaveText(randomName);
+      contacts().getContactComponentByIndex(FIRST_CONTACT_INDEX).name
+    ).toHaveText(testContact.name);
 
     await page.reload();
-    await contacts().searchContacts(randomName);
+    await contacts().searchContacts(testContact.name);
     await expect(
-      contacts().getContactByName(randomName).first()
+      contacts().getContactByName(testContact.name).first()
     ).not.toBeVisible();
   }
 );
@@ -46,14 +60,7 @@ newContactsTest(
 for (const { description, data, errorMessage } of emptyFieldTestCases) {
   newContactsTest(
     `submit form with ${description} shows error`,
-    async ({ contacts, newContact, page }): Promise<void> => {
-      await expect(contacts().searchBar).toBeVisible();
-      await contacts().createContactButton.click();
-      expect(page.url()).toContain(ReactAppEndpoints.createContact);
-      await expect(newContact().createContactTitle).toHaveText(
-        "Create Contact"
-      );
-
+    async ({ newContact, page }): Promise<void> => {
       await newContact().fillContactForm(data);
       await newContact().saveButton.click();
 
@@ -66,14 +73,7 @@ for (const { description, data, errorMessage } of emptyFieldTestCases) {
 for (const { description, data } of invalidPhoneTestCases) {
   newContactsTest(
     `break the phone field with ${description}`,
-    async ({ contacts, newContact, page }): Promise<void> => {
-      await expect(contacts().searchBar).toBeVisible();
-      await contacts().createContactButton.click();
-      expect(page.url()).toContain(ReactAppEndpoints.createContact);
-      await expect(newContact().createContactTitle).toHaveText(
-        "Create Contact"
-      );
-
+    async ({ newContact, page }): Promise<void> => {
       await newContact().fillContactForm(data);
       await newContact().saveButton.click();
 

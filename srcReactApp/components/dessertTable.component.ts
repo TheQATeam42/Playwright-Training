@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import BaseComponent from "../../sharedFiles/components/baseComponent.component";
-import { Dessert } from "../../sharedFiles/modals/dessert.model";
+import { Dessert } from "../modals/dessert.model";
 
 /**
  * Represents the Dessert/Nutrition Table on the Playground page.
