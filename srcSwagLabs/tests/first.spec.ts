@@ -12,6 +12,7 @@
 
 import swagLabsTest from "./setup/testLevelHooks.setup";
 
+/** Known test usernames for the Swag Labs application. */
 enum Users {
   standardUser = "standard_user",
 }

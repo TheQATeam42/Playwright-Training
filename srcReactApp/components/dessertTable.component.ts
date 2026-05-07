@@ -9,6 +9,7 @@ import { Dessert } from "../../sharedFiles/modals/dessert.model";
  * @extends BaseComponent
  */
 export default class DessertTableComponent extends BaseComponent {
+  /** All `<tbody>` row locators of the nutrition table */
   public readonly tableRows: Locator;
 
   constructor(page: Page) {
@@ -16,6 +17,11 @@ export default class DessertTableComponent extends BaseComponent {
     this.tableRows = page.getByTestId("basic-table").locator("tbody tr");
   }
 
+  /**
+   * Reads all cells from the row at the given index and returns a {@link Dessert}.
+   * @param index - Zero-based row index
+   * @returns A Dessert object populated with the row's name, calories, fat, carbs, and protein
+   */
   async getTableRowData(index: number): Promise<Dessert> {
     const row = this.tableRows.nth(index);
     const name = (await row.locator("th").textContent()) ?? "";

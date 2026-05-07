@@ -8,6 +8,7 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
  * @extends BaseComponent
  */
 export default class NewWindowComponent extends BaseComponent {
+  /** Button that opens an external URL in a new browser tab */
   public readonly newWindowButton: Locator;
 
   constructor(page: Page) {

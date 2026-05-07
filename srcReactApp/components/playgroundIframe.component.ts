@@ -8,9 +8,13 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
  * @extends BaseComponent
  */
 export default class PlaygroundIframeComponent extends BaseComponent {
+  /** Search input scoped inside the iframe contacts app */
   public readonly searchInput: Locator;
+  /** Contact list container inside the iframe */
   public readonly contactList: Locator;
+  /** Heading that confirms the Create Contact form is open inside the iframe */
   public readonly createContactTitle: Locator;
+  /** Button that navigates to the Create Contact form inside the iframe */
   public readonly addButton: Locator;
 
   constructor(page: Page, frame: FrameLocator) {

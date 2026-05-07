@@ -8,8 +8,11 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
  * @param {Page} page - The Playwright Page object representing the current page.
  */
 export default class Contact extends BaseComponent {
+  /** Locator for the contact's displayed name */
   public readonly name: Locator;
+  /** Button that deletes this contact (triggers a browser confirmation dialog) */
   public readonly deleteButton: Locator;
+  /** Button that navigates to the Edit Contact form for this contact */
   public readonly editButton: Locator;
 
   constructor(page: Page, root: Locator) {
@@ -18,13 +21,11 @@ export default class Contact extends BaseComponent {
     this.deleteButton = root.getByTestId("delete-button");
     this.editButton = root.getByTestId("edit-button");
   }
-  async delete(): Promise<void> {
-    await this.deleteButton.click();
-  }
-  async edit(): Promise<void> {
-    await this.editButton.click();
-  }
 
+  /**
+   * Returns the displayed name of this contact.
+   * @returns Text content of the name element, or `""` if unavailable.
+   */
   async getName(): Promise<string> {
     return (await this.name.textContent()) ?? "";
   }

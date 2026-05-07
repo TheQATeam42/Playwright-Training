@@ -26,10 +26,15 @@ export default class PlaygroundPage extends BasePage {
    * Accessed before the playground page is loaded, e.g. from the contacts list.
    */
   public readonly playgroundButton: Locator;
+  /** Movie search autocomplete widget */
   public readonly movieAutocomplete: MovieAutocompleteComponent;
+  /** Toggle switches section */
   public readonly switchGroup: SwitchGroupComponent;
+  /** Nutrition/dessert data table with row-read helpers */
   public readonly dessertTable: DessertTableComponent;
+  /** Button that opens an external URL in a new tab */
   public readonly newWindow: NewWindowComponent;
+  /** Embedded iframe containing a mini contacts application */
   public readonly iframeSection: PlaygroundIframeComponent;
 
   constructor(page: Page) {

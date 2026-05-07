@@ -10,6 +10,7 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
  * @param {Locator} root - The root locator for the item container.
  */
 export default class Item extends BaseComponent {
+  /** Root locator scoping all child elements of this item card */
   root: Locator;
 
   constructor(page: Page, root: Locator) {

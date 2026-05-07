@@ -8,7 +8,9 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
  * @extends BaseComponent
  */
 export default class SwitchGroupComponent extends BaseComponent {
+  /** First toggle switch — enabled by default */
   public readonly switchOne: Locator;
+  /** Second toggle switch — disabled when switchOne is unchecked */
   public readonly switchTwo: Locator;
 
   constructor(page: Page) {
