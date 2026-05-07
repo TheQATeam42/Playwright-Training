@@ -17,7 +17,7 @@ import reactAppTest from "./setup/testLevelHooks.setup";
 const contactsTest = reactAppTest.extend({});
 
 contactsTest(
-  "add to contacts list, search for it, delete it and check if it is deleted",
+  "Search for contacts, delete it and check if it is deleted",
   async ({ contacts, page }): Promise<void> => {
     await expect(contacts().searchBar).toBeVisible();
     const randomName = await contacts().getRandomContactName();

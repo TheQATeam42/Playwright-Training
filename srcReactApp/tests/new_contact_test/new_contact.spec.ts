@@ -33,7 +33,7 @@ newContactsTest.beforeEach(async ({ contacts, newContact, page }) => {
 });
 
 newContactsTest(
-  "add to contacts list, search for it, delete it and check if it is deleted",
+  "Add to contacts list, search for it, delete it and check if it is deleted",
   async ({ contacts, newContact, page }): Promise<void> => {
     const testContact = {
       name: "TestName" + Math.floor(Math.random() * RANDOM_SUFFIX_MAX),
@@ -59,7 +59,7 @@ newContactsTest(
 
 for (const { description, data, errorMessage } of emptyFieldTestCases) {
   newContactsTest(
-    `submit form with ${description} shows error`,
+    `Submit form with ${description} shows error`,
     async ({ newContact, page }): Promise<void> => {
       await newContact().fillContactForm(data);
       await newContact().saveButton.click();
@@ -72,7 +72,7 @@ for (const { description, data, errorMessage } of emptyFieldTestCases) {
 
 for (const { description, data } of invalidPhoneTestCases) {
   newContactsTest(
-    `break the phone field with ${description}`,
+    `Break the phone field with ${description}`,
     async ({ newContact, page }): Promise<void> => {
       await newContact().fillContactForm(data);
       await newContact().saveButton.click();

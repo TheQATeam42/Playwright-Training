@@ -30,7 +30,7 @@ const expectedDesserts: Dessert[] = [
 ];
 
 playgroundTest(
-  "playground test",
+  "Playground test",
   async ({ contacts, playground, page }): Promise<void> => {
     await playgroundTest.step("Navigate to Playground", async () => {
       await expect(contacts().searchBar).toBeVisible();
