@@ -97,4 +97,4 @@ class EnvironmentConfig {
   }
 }
 
-export { BrowserConfig, EnvironmentConfig };
+export { BrowserConfig, EnvironmentConfig, readNumberEnv };

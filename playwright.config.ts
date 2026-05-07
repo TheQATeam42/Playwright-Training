@@ -28,7 +28,10 @@ export default defineConfig({
     {
       name: "react app",
       testDir: "srcReactApp",
-      use: { baseURL: EnvironmentConfig.reactAppUrl },
+      use: {
+        baseURL: EnvironmentConfig.reactAppUrl,
+        testIdAttribute: "data-id",
+      },
     },
     {
       name: "swag labs",
