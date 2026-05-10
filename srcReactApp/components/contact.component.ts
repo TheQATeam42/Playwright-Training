@@ -14,12 +14,15 @@ export default class Contact extends BaseComponent {
   public readonly deleteButton: Locator;
   /** Button that navigates to the Edit Contact form for this contact */
   public readonly editButton: Locator;
-
+  public readonly gender: Locator;
+  public readonly Address: Locator;
   constructor(page: Page, root: Locator) {
     super(page);
     this.name = root.getByTestId("name");
     this.deleteButton = root.getByTestId("delete-button");
     this.editButton = root.getByTestId("edit-button");
+    this.gender = root.getByTestId("gender-label");
+    this.Address = root.getByTestId("address-label");
   }
 
   /**
