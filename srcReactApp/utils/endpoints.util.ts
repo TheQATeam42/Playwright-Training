@@ -4,6 +4,8 @@
  */
 enum ReactAppEndpoints {
   // TODO: Add here all the system endpoints
+  createContact = "/tasks/create",
+  playgroundEnd = "/playground",
 }
 
 export default ReactAppEndpoints;

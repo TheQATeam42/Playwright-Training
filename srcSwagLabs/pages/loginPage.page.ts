@@ -9,9 +9,13 @@ import BasePage from "../../sharedFiles/pages/basePage.page";
  * @param {Page} page - The Playwright Page object representing the current page.
  */
 export default class LoginPage extends BasePage {
+  /** Input field for entering the username */
   public readonly usernameInput: Locator;
+  /** Input field for entering the password */
   public readonly passwordInput: Locator;
+  /** Button that submits the login form */
   public readonly loginButton: Locator;
+  /** Error message displayed when login fails */
   public readonly errorMessage: Locator;
 
   constructor(page: Page) {

@@ -12,8 +12,9 @@
 
 import swagLabsTest from "./setup/testLevelHooks.setup";
 
+/** Known test usernames for the Swag Labs application. */
 enum Users {
-  STANDARD_USER = "standard_user",
+  standardUser = "standard_user",
 }
 
 const loginTest = swagLabsTest.extend({});
@@ -21,6 +22,6 @@ const loginTest = swagLabsTest.extend({});
 loginTest(
   "Write here the name of the test",
   async ({ loginPage }): Promise<void> => {
-    loginPage().usernameInput.fill(Users.STANDARD_USER);
+    await loginPage().usernameInput.fill(Users.standardUser);
   }
 );

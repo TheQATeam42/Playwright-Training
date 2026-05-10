@@ -51,13 +51,13 @@ class UrlHelper {
    *
    * @param endpoint - Endpoint path to validate against.
    * @param page - Playwright Page instance whose URL will be checked.
-   * @returns A promise that resolves to true when origin and pathname match,
-   *          otherwise false. Returns false on any parsing error.
+   * @returns `true` when origin and pathname match, otherwise `false`.
+   *          Returns `false` on any parsing error.
    */
-  public static async validateUrl(
+  public static validateUrl(
     endpoint: SwagLabsEndpoints | ReactAppEndpoints,
     page: import("playwright").Page
-  ): Promise<boolean> {
+  ): boolean {
     try {
       const current = new URL(page.url());
       const expected = new URL(this.getFullUrl(endpoint));
