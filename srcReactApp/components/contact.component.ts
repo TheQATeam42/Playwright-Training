@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Locator } from "@playwright/test";
 import BaseComponent from "../../sharedFiles/components/baseComponent.component";
 
 /**
@@ -6,10 +6,19 @@ import BaseComponent from "../../sharedFiles/components/baseComponent.component"
  * This class provides methods and properties to interact with a contact's elements.
  *
  * @extends BaseComponent
- * @param {Page} page - The Playwright Page object representing the current page.
+ * @param {Locator} root - The Playwright Locator object representing the current component.
  */
 export default class Contact extends BaseComponent {
-  constructor(page: Page) {
-    super(page);
+  readonly deleteButton: Locator;
+  readonly name: Locator;
+  readonly address: Locator;
+  readonly gender: Locator;
+
+  constructor(root: Locator) {
+    super(root);
+    this.deleteButton = root.getByTestId("delete-button");
+    this.name = root.getByTestId("name");
+    this.address = root.getByTestId("address");
+    this.gender = root.getByTestId("gender");
   }
 }
